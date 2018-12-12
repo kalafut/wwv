@@ -1,5 +1,5 @@
 var at_the_tone = new Audio();
-at_the_tone.src="wwv/at_the_tone.mp3";
+at_the_tone.src="wwv/phrases/v_at_the_tone.mp3";
 var h23 = document.getElementById("h23");
 var m53 = document.getElementById("m53");
 
@@ -18,13 +18,9 @@ function stop() {
     document.getElementById("aud0").pause();
 }
 
-/*
- *
-*/
 function schedule() {
     t = getTime();
     var ms = 1000*t.getSeconds() + t.getMilliseconds();
-    
 }
 
 function getTime() {
