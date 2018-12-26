@@ -60,10 +60,10 @@ function schedule(current) {
     var minutePulse = getClip("v_minute_pulse");
     var main = getClip("v_main_500");
     var gap = getClip("v_pulse_gap");
-    var att = getClip("v_at_the_tone");
+    var att = getClip("v_at_the_tone2");
     var hour = getClip(`v_h_${pad(hours)}`);
     var minute = getClip(`v_m_${pad(minutes)}`);
-    var utc = getClip("v_utc");
+    var utc = getClip("v_utc2");
 
     if(minutes == 0) {
         main = getClip("v_ident");
@@ -80,10 +80,10 @@ function schedule(current) {
     //    [ minute, 55000+ mo ],
     //    [ utc, 56750 ],
     //];
-    var testOffset = 40000;
+    var testOffset = 0;
     var s = [
         [ minutePulse, 0 ],
-        //[ main, 1000 ],
+        [ main, 1000 ],
         [ "gap", 45000 - testOffset ],
         [ att, 52500 - testOffset ],
         [ "time", 53500 - testOffset ],
@@ -109,8 +109,9 @@ function schedule(current) {
             schedule(false);
         } else {
             var delay = 60000 - ms;
+            //var delay = 0;
             if(audio === "gap") {
-                setTimeout(function() { pulses(15); }, start + delay);
+                setTimeout(function() { pulses(14); }, start + delay);
             } else if(audio === "time") {
                 setTimeout(function() { timeAudio(hours, minutes); }, start + delay);
             } else {
@@ -163,7 +164,7 @@ function clock() {
     counts++;
 }
 
-if(1) {
+if(0) {
     var startTime = '1995-12-17T19:03:50Z';
 } else {
     var startTime = null;
