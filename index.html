@@ -1,22 +1,7 @@
 <html>
 <body>
-<audio id="aud0">
-  <source src="wwv/times/v_m_00.mp3" type="audio/mp4"/>
-</audio>
-<audio id="at_the_tone">
-  <source src="wwv/phrases/v_at_the_tone.mp3" type="audio/mp3"/>
-</audio>
-<audio id="h23">
-  <source src="wwv/times/v_h_23.mp3" type="audio/mp3"/>
-</audio>
-<audio id="m53">
-  <source src="wwv/times/v_m_53.mp3" type="audio/mp3"/>
-</audio>
-<audio id="utc">
-  <source src="wwv/phrases/v_coordinated_universal_time_beep.mp3" type="audio/mp3"/>
-</audio>
-
-<button onclick="stop();">Pause</button>
+<button id="go" onclick="go();">Pause</button>
+<p id="clock">0</p>
 
 <script src="app.js"></script>
 </body>
