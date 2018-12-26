@@ -36,6 +36,7 @@ function schedule(current) {
     var hours = now.getUTCHours();
     var minutes = now.getUTCMinutes();
     var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
+    var station = getStation();
 
     if(current) {
         minutes += 1;
@@ -58,16 +59,36 @@ function schedule(current) {
     }
 
     var minutePulse = getClip("v_minute_pulse");
-    var main = getClip("v_main_500");
+
+    var identFillDelay = 0;
+    var identFill = 0;
+
+    // pick correct tone file
+    if((minutes + 1) % 2 === 0) {
+        var main = getClip("v_main_500");
+    } else {
+        var main = getClip("v_main_600");
+    }
+
+    minutes = 0;
+    if(minutes === 0 && station == "v") {
+        var main = getClip("v_ident");
+        var identFill = 10;
+        var identFillDelay = 35000;
+    }
+
+    if(minutes === 0 && station == "h") {
+        var main = getClip("h_ident");
+        var identFill = 5;
+        var identFillDelay = 40000;
+    }
+
+
     var gap = getClip("v_pulse_gap");
     var att = getClip("v_at_the_tone2");
     var hour = getClip(`v_h_${pad(hours)}`);
     var minute = getClip(`v_m_${pad(minutes)}`);
     var utc = getClip("v_utc2");
-
-    if(minutes == 0) {
-        main = getClip("v_ident");
-    }
 
     var ho = getOffset(`v_h_${pad(hours)}`);
     var mo = getOffset(`v_m_${pad(minutes)}`);
@@ -84,6 +105,7 @@ function schedule(current) {
     var s = [
         [ minutePulse, 0 ],
         [ main, 1000 ],
+        [ "identGap", identFillDelay ],
         [ "gap", 45000 - testOffset ],
         [ att, 52500 - testOffset ],
         [ "time", 53500 - testOffset ],
@@ -114,6 +136,8 @@ function schedule(current) {
                 setTimeout(function() { pulses(14); }, start + delay);
             } else if(audio === "time") {
                 setTimeout(function() { timeAudio(hours, minutes); }, start + delay);
+            } else if(audio === "identGap") {
+                setTimeout(function() { pulses(identFill); }, start + delay);
             } else {
                 setTimeout(audio.play.bind(audio), start + delay);
                 setTimeout(schedule.bind(null, false), 55000 + delay);
@@ -171,6 +195,10 @@ if(0) {
 }
 
 function pulses(count) {
+    if(count <= 0) {
+        return;
+    }
+
     var played = 0;
     var timerId = 0;
 
@@ -229,6 +257,10 @@ function go() {
     //setTimeout(audio.play.bind(audio), 1500);
     //var audio = getClip("v_minutes");
     //setTimeout(audio.play.bind(audio), 2000);
+}
+
+function getStation(name) {
+    return "v"
 }
 
 function getOffset(name) {
