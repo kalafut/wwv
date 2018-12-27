@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:03:26Z';
+    var startTime = '1995-12-17T19:59:50Z';
 } else {
     var startTime = null;
 }
@@ -212,7 +212,18 @@ function pulses(count) {
     }, 1000);
 }
 
-function timeAudio(hours, minutes) {
+function timeAudio(hours, minutes, nextMinute) {
+    if(nextMinute) {
+        minutes++;
+        if(minutes > 59) {
+            minutes = 0;
+            hours++;
+        }
+        if(hours > 23) {
+            hours = 0;
+        }
+    }
+
     var clips = [[getClip("v_" + hours), 0]];
 
     var haudio = (hours == 1) ? getClip("v_hour") : getClip("v_hours");
@@ -241,7 +252,6 @@ var queue = {};
 
 function playAt(clip, time, offset) {
     var now = getTime();
-    console.log(now);
     var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
 
     var diff = time - ms;
@@ -295,7 +305,11 @@ function realtime() {
     }
 
     playAt("v_at_the_tone2", 52500);
-    playAt(function() {timeAudio(hours, (minutes+1) % 60)}, 53500);
+
+    // Play voice time
+    playAt(function() {timeAudio(hours, minutes, true)}, 53500);
+
+    // "coordinated universal time"
     playAt("v_utc2", 56750);
     setTimeout(realtime, 200);
 }
