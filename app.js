@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:59:25Z';
+    var startTime = '1995-12-17T19:59:45Z';
 } else {
     var startTime = null;
 }
@@ -297,7 +297,7 @@ function realtime() {
         playAt(station + "_pulse", ((secs+1)*1000) % 60000);
     }
 
-    playAt("v_at_the_tone2", 52500);
+    playAt(station + "_at_the_tone2", 52500);
 
     // Play voice time
     playAt(function() {timeAudio(hours, minutes, true)}, 53500);
@@ -317,8 +317,8 @@ function go() {
     document.getElementById("go").disabled = true;
 }
 
-function getStation(name) {
-    return "h"
+function getStation() {
+    return document.getElementById("station").value;
 }
 
 
