@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Generating tone files"
+go run main.go
+
+echo "Converting to MP3s"
+for f in *.wav ; do lame --preset 64 $f ; done
+rm *.wav
+
+echo "Moving to clips directory"
+mv *.mp3 ../clips

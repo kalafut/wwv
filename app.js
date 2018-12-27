@@ -16,16 +16,6 @@ function pad(num) {
     return s;
 }
 
-function playAt(el, time) {
-    var now = getTime();
-    var ms = 1000*now.getSeconds() + now.getMilliseconds();
-    var wait = time - ms;
-
-    if(wait >= 0) {
-        console.log(wait);
-        setTimeout(el.play.bind(el), wait);
-    }
-}
 
 function stop() {
     document.getElementById("aud0").pause();
@@ -235,6 +225,72 @@ function timeAudio(hours, minutes) {
     })
 }
 
+function pulse() {
+    var audio = getClip("v_pulse");
+    audio.play();
+}
+
+var queue = {};
+
+function playAt(clip, time, offset) {
+    var now = getTime();
+    var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
+
+    var diff = time - ms;
+    if(diff < 0) {
+        diff += 60000;
+    };
+
+    if(diff < 500) {
+        if(queue[clip] == null) {
+            queue[clip] = true;
+            setTimeout(function() {
+                if(typeof(clip) === "function") {
+                    clip();
+                } else {
+                    var audio = getClip(clip);
+                    if(offset != null) {
+                        audio.currentTime = offset / 1000;
+                    }
+                    audio.onended = function() {
+                        queue[clip] = null;
+                    }
+                    audio.play();
+                }
+            }, diff);
+        }
+    }
+}
+
+
+function realtime() {
+    var now = getTime();
+    var hours = now.getUTCHours();
+    var minutes = now.getUTCMinutes();
+    var secs = now.getUTCSeconds();
+    var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
+    var station = getStation();
+
+    var m = now.getUTCMilliseconds();
+
+    playAt("v_minute_pulse", 0);
+
+    if(secs >=1 && secs < 35) {
+        var offset = ms - 1000;
+        playAt("v_main_500", ms + 50, offset);
+    } else {
+        playAt("v_main_500", 1000);
+    }
+
+    if(secs > 44 && secs != 58) {
+        playAt("v_pulse", ((secs+1)*1000) % 60000);
+    }
+
+    playAt("v_at_the_tone2", 52500);
+    playAt(function() {timeAudio(hours, (minutes+1) % 60)}, 53500);
+    playAt("v_utc2", 56750);
+    setTimeout(realtime, 200);
+}
 
 function go() {
     //timeAudio(19, 5);
@@ -242,7 +298,9 @@ function go() {
     //return;
 
     setInterval(clock, 1000);
-    schedule(false);
+    //schedule(false);
+    realtime();
+
     document.getElementById("go").disabled = true;
     //
     //
