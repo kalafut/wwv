@@ -1,3 +1,9 @@
+if(1) {
+    var startTime = '1995-12-17T19:03:26Z';
+} else {
+    var startTime = null;
+}
+
 var clips = {};
 
 function getClip(name) {
@@ -136,11 +142,18 @@ function schedule(current) {
     });
 }
 
+var startMs = null;
 function getTime() {
     if(startTime != null) {
-        var d = new Date(startTime);
-        startTime = null
-        return d;
+        var now = new Date();
+        var fakeStart = new Date(startTime);
+        if(startMs == null) {
+            startMs = now.getTime();
+            return fakeStart;
+        } else {
+            var elapsed = now.getTime() - startMs;
+            return new Date(fakeStart.getTime() + elapsed)
+        }
     }
     return new Date();
 }
@@ -176,12 +189,6 @@ function clock() {
     var clock = document.getElementById("clock");
     clock.innerHTML = counts;
     counts++;
-}
-
-if(0) {
-    var startTime = '1995-12-17T19:03:50Z';
-} else {
-    var startTime = null;
 }
 
 function pulses(count) {
@@ -234,6 +241,7 @@ var queue = {};
 
 function playAt(clip, time, offset) {
     var now = getTime();
+    console.log(now);
     var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
 
     var diff = time - ms;
@@ -293,46 +301,16 @@ function realtime() {
 }
 
 function go() {
-    //timeAudio(19, 5);
-    //pulses(60);
-    //return;
-
     setInterval(clock, 1000);
     //schedule(false);
     realtime();
 
     document.getElementById("go").disabled = true;
-    //
-    //
-    ////var audio = getClip("v_pulse_gap");
-    //var audio = getClip("v_pulse_gap_lpf_1000_12");
-    ////setTimeout(audio.play.bind(audio), 0);
-    //var audio = getClip("v_19");
-    //setTimeout(audio.play.bind(audio), 0);
-    //var audio = getClip("v_hours");
-    //setTimeout(audio.play.bind(audio), 700);
-    //var audio = getClip("v_4");
-    //setTimeout(audio.play.bind(audio), 1500);
-    //var audio = getClip("v_minutes");
-    //setTimeout(audio.play.bind(audio), 2000);
 }
 
 function getStation(name) {
     return "v"
 }
-
-function getOffset(name) {
-    var offsets = {
-        "v_h_19": -200,
-        "v_h_20": -200,
-        "v_m_04": -420,
-    };
-    if (name in offsets) {
-        return offsets[name];
-    }
-    return 0;
-}
-
 
 
 preload();
