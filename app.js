@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:59:50Z';
+    var startTime = '1995-12-17T19:59:04Z';
 } else {
     var startTime = null;
 }
@@ -184,11 +184,15 @@ function preload() {
     }
 }
 
-var counts = 1;
-function clock() {
-    var clock = document.getElementById("clock");
-    clock.innerHTML = counts;
-    counts++;
+var lastClockText = "";
+function updateClock() {
+    var now = getTime();
+    var text = pad(now.getUTCHours()) + ":" + pad(now.getUTCMinutes()) + ":" + pad(now.getUTCSeconds());
+    if(text != lastClockText) {
+        var clock = document.getElementById("clock");
+        clock.innerHTML = text;
+        lastClockText = text;
+    }
 }
 
 function pulses(count) {
@@ -265,6 +269,7 @@ function playAt(clip, time, offset) {
             setTimeout(function() {
                 if(typeof(clip) === "function") {
                     clip();
+                    queue[clip] = null;
                 } else {
                     var audio = getClip(clip);
                     if(offset != null) {
@@ -287,19 +292,31 @@ function realtime() {
     var minutes = now.getUTCMinutes();
     var secs = now.getUTCSeconds();
     var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
-    var station = getStation();
-
     var m = now.getUTCMilliseconds();
+    var station = getStation();
 
     playAt("v_minute_pulse", 0);
 
-    if(secs >=1 && secs < 35) {
-        var offset = ms - 1000;
-        playAt("v_main_500", ms + 50, offset);
+    // pick correct tone file
+    if((minutes + 1) % 2 === 0) {
+        var clip = "_main_500";
     } else {
-        playAt("v_main_500", 1000);
+        var clip = "_main_600";
     }
 
+    if(((minutes == 0 || minutes == 30) && station == "v")
+        || ((minutes == 1 || minutes == 59) && station == "v")) {
+        clip = "_ident";
+    }
+
+    if(secs >=1 && secs < 30) {
+        var offset = ms - 1000;
+        playAt(station + clip, ms + 50, offset);
+    } else {
+        playAt(station + clip, 1000);
+    }
+
+    // pulses
     if(secs > 44 && secs != 58) {
         playAt("v_pulse", ((secs+1)*1000) % 60000);
     }
@@ -311,11 +328,13 @@ function realtime() {
 
     // "coordinated universal time"
     playAt("v_utc2", 56750);
+
+    playAt(function() {updateClock()}, ((secs+1)*1000) % 60000);
     setTimeout(realtime, 200);
 }
 
 function go() {
-    setInterval(clock, 1000);
+    //setInterval(clock, 1000);
     //schedule(false);
     realtime();
 
