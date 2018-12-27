@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:59:04Z';
+    var startTime = '1995-12-17T19:59:25Z';
 } else {
     var startTime = null;
 }
@@ -195,27 +195,6 @@ function updateClock() {
     }
 }
 
-function pulses(count) {
-    if(count <= 0) {
-        return;
-    }
-
-    var played = 0;
-    var timerId = 0;
-
-    var audio = getClip("v_pulse");
-    audio.play();
-    played++;
-
-    timerId = setInterval(function() {
-        audio.play();
-        played++;
-        if(played >= count) {
-            clearInterval(timerId);
-        }
-    }, 1000);
-}
-
 function timeAudio(hours, minutes, nextMinute) {
     if(nextMinute) {
         minutes++;
@@ -245,11 +224,6 @@ function timeAudio(hours, minutes, nextMinute) {
         console.log(clip[0].duration);
         total += clip[0].duration * 1000;
     })
-}
-
-function pulse() {
-    var audio = getClip("v_pulse");
-    audio.play();
 }
 
 var queue = {};
@@ -298,6 +272,7 @@ function realtime() {
     playAt("v_minute_pulse", 0);
 
     // pick correct tone file
+    var earlyPulseStart = 0;
     if((minutes + 1) % 2 === 0) {
         var clip = "_main_500";
     } else {
@@ -305,8 +280,9 @@ function realtime() {
     }
 
     if(((minutes == 0 || minutes == 30) && station == "v")
-        || ((minutes == 1 || minutes == 59) && station == "v")) {
+        || ((minutes == 1 || minutes == 59) && station == "h")) {
         clip = "_ident";
+        earlyPulseStart = station == "v" ? 11 : 6;
     }
 
     if(secs >=1 && secs < 30) {
@@ -317,8 +293,8 @@ function realtime() {
     }
 
     // pulses
-    if(secs > 44 && secs != 58) {
-        playAt("v_pulse", ((secs+1)*1000) % 60000);
+    if(secs > 44 - earlyPulseStart && secs != 58) {
+        playAt(station + "_pulse", ((secs+1)*1000) % 60000);
     }
 
     playAt("v_at_the_tone2", 52500);
@@ -342,7 +318,7 @@ function go() {
 }
 
 function getStation(name) {
-    return "v"
+    return "h"
 }
 
 
