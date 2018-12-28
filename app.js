@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:59:45Z';
+    var startTime = '1995-12-17T19:04:50Z';
 } else {
     var startTime = null;
 }
@@ -39,28 +39,26 @@ function getTime() {
 }
 
 function preload() {
-    getClip("v_minute_pulse");
-    getClip("v_main_500");
-    getClip("v_pulse_gap");
-    getClip("v_at_the_tone");
-    getClip("v_utc");
-    getClip("v_ident");
-    getClip("v_19");
-    getClip("v_4");
-    getClip("v_1");
-    getClip("v_hour");
-    getClip("v_hours");
-    getClip("v_minute");
-    getClip("v_minutes");
-    getClip("v_pulse");
+    [
+    "_minute_pulse",
+    "_main_500",
+    "_pulse_gap",
+    "_at_the_tone",
+    "_utc2",
+    "_ident",
+    "_hour",
+    "_hours",
+    "_minute",
+    "_minutes",
+    "_pulse",
+    ].forEach(function(clip) {
+        getClip("v" + clip);
+        getClip("h" + clip);
+    });
 
-    for(hours = 0; hours < 24; hours++) {
-        //getClip(`v_h_${pad(hours)}`);
-    }
-
-    for(minutes = 0; minutes < 60; minutes++) {
-        //getClip(`v_m_${pad(minutes)}`);
-        getClip(`v_${minutes}`);
+    for(t = 0; t < 60; t++) {
+        getClip(`v_${t}`);
+        getClip(`h_${t}`);
     }
 }
 
@@ -75,7 +73,7 @@ function updateClock() {
     }
 }
 
-function timeAudio(hours, minutes, nextMinute) {
+function timeAudio(station, hours, minutes, nextMinute) {
     if(nextMinute) {
         minutes++;
         if(minutes > 59) {
@@ -87,13 +85,13 @@ function timeAudio(hours, minutes, nextMinute) {
         }
     }
 
-    var clips = [[getClip("v_" + hours), 0]];
+    var clips = [[getClip(station + "_" + hours), 0]];
 
-    var haudio = (hours == 1) ? getClip("v_hour") : getClip("v_hours");
+    var haudio = (hours == 1) ? getClip(station + "_hour") : getClip(station + "_hours");
     clips.push([haudio, 0])
-    clips.push([getClip("v_" + minutes), 100])
+    clips.push([getClip(station + "_" + minutes), 100])
 
-    var maudio = (minutes == 1) ? getClip("v_minute"): getClip("v_minutes");
+    var maudio = (minutes == 1) ? getClip(station + "_minute"): getClip(station + "_minutes");
     clips.push([maudio, 100])
 
     var total = 0
@@ -176,10 +174,10 @@ function realtime() {
     playAt(station + "_at_the_tone2", 52500);
 
     // Play voice time
-    playAt(function() {timeAudio(hours, minutes, true)}, 53500);
+    playAt(function() { timeAudio(station, hours, minutes, true) }, 53500);
 
     // "coordinated universal time"
-    playAt("v_utc2", 56750);
+    playAt(station + "_utc2", 56750);
 
     playAt(function() {updateClock()}, ((secs+1)*1000) % 60000);
     setTimeout(realtime, 200);
