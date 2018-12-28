@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:04:50Z';
+    var startTime = '1995-12-17T19:59:55Z';
 } else {
     var startTime = null;
 }
@@ -143,7 +143,11 @@ function realtime() {
     var m = now.getUTCMilliseconds();
     var station = getStation();
 
-    playAt("v_minute_pulse", 0);
+    if(minutes == 59) {
+        playAt("hour_pulse", 0);
+    } else {
+        playAt(station + "_minute_pulse", 0);
+    }
 
     // pick correct tone file
     var earlyPulseStart = 0;
