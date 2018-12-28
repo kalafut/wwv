@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:59:55Z';
+    var startTime = '1995-12-17T19:0j:55Z';
 } else {
     var startTime = null;
 }
@@ -41,7 +41,9 @@ function getTime() {
 function preload() {
     [
     "_minute_pulse",
+    "_main_440",
     "_main_500",
+    "_main_600",
     "_pulse_gap",
     "_at_the_tone",
     "_utc2",
@@ -163,7 +165,11 @@ function realtime() {
         earlyPulseStart = station == "v" ? 11 : 6;
     }
 
-    if(secs >=1 && secs < 30) {
+    if((minutes == 1 && station == "h") || (minutes == 2 && station == "v")) {
+        var clip = "_main_440";
+    }
+
+    if(secs >= 1 && secs < 30) {
         var offset = ms - 1000;
         playAt(station + clip, ms + 50, offset);
     } else {
