@@ -187,21 +187,18 @@ function realtime() {
         playAt(clip, 1000);
     }
 
-
-    // pulses
-    console.log(clipDuration);
-    if(secs > clipDuration && secs != 58) {
+    // Pulses and voice time
+    if(secs > clipDuration - 1 && secs != 58) {
         playAt(station + "_pulse", ((secs+1)*1000) % 60000);
     }
 
-    playAt(station + "_at_the_tone2", 52500);
+    playAt(station + "_at_the_tone2",  station == "h" ? 45500 : 52500);
 
     // Play voice time
-    var voiceStart = station == "h" ? 45000 : 53500;
-    playAt(function() { timeAudio(station, hours, minutes, true) }, voiceStart );
+    playAt(function() { timeAudio(station, hours, minutes, true) }, station == "h" ? 46500 : 53500 );
 
     // "coordinated universal time"
-    playAt(station + "_utc2", 56750);
+    playAt(station + "_utc2", station == "h" ? 49750 : 56750);
 
     if(stopPlaying) {
         stopPlaying = false;
