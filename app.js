@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:03:45Z';
+    var startTime = '1995-12-17T19:04:40Z';
 } else {
     var startTime = null;
 }
@@ -64,16 +64,20 @@ function preload() {
     }
 }
 
-var lastClockText = "";
-function updateClock() {
-    var now = getTime();
-    var text = pad(now.getUTCHours()) + ":" + pad(now.getUTCMinutes()) + ":" + pad(now.getUTCSeconds());
-    if(text != lastClockText) {
+var runningClock = function() {
+    var nextText = "";
+    function updateClock() {
         var clock = document.getElementById("clock");
-        clock.innerHTML = text;
-        lastClockText = text;
+        clock.innerHTML = nextText;
+
+        var now = getTime();
+        var delay = 1000 - now.getUTCMilliseconds();
+        now.setUTCSeconds(now.getUTCSeconds()+1);
+        nextText = now.toISOString().substring(11,19)
+        setTimeout(updateClock, delay);
     }
-}
+    return updateClock;
+}();
 
 function timeAudio(station, hours, minutes, nextMinute) {
     if(nextMinute) {
@@ -164,7 +168,7 @@ function realtime() {
     }
 
     if(((minutes == 0 || minutes == 30) && station == "v")
-        || ((minutes == 1 || minutes == 59) && station == "h")) {
+        || ((minutes == 29 || minutes == 59) && station == "h")) {
         clip = "_ident";
         earlyPulseStart = station == "v" ? 11 : 6;
     }
@@ -173,15 +177,20 @@ function realtime() {
         var clip = "_main_440";
     }
 
-    if(secs >= 1 && secs < 30) {
+    clip = station + clip;
+    var clipDuration = getClip(clip).duration;
+
+    if(secs >= 1 && secs < clipDuration) {
         var offset = ms - 1000;
-        playAt(station + clip, ms + 50, offset);
+        playAt(clip, ms + 50, offset);
     } else {
-        playAt(station + clip, 1000);
+        playAt(clip, 1000);
     }
 
+
     // pulses
-    if(secs > 44 - earlyPulseStart && secs != 58) {
+    console.log(clipDuration);
+    if(secs > clipDuration && secs != 58) {
         playAt(station + "_pulse", ((secs+1)*1000) % 60000);
     }
 
@@ -193,8 +202,6 @@ function realtime() {
 
     // "coordinated universal time"
     playAt(station + "_utc2", 56750);
-
-    playAt(function() {updateClock()}, ((secs+1)*1000) % 60000);
 
     if(stopPlaying) {
         stopPlaying = false;
@@ -226,5 +233,5 @@ function getStation() {
     return document.getElementById("station").value;
 }
 
-
 preload();
+runningClock();
