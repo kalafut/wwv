@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:0j:55Z';
+    var startTime = '1995-12-17T19:03:45Z';
 } else {
     var startTime = null;
 }
@@ -104,6 +104,7 @@ function timeAudio(station, hours, minutes, nextMinute) {
 }
 
 var queue = {};
+var playing = {};
 
 function playAt(clip, time, offset) {
     var now = getTime();
@@ -128,7 +129,9 @@ function playAt(clip, time, offset) {
                     }
                     audio.onended = function() {
                         queue[clip] = null;
+                        delete playing[clip];
                     }
+                    playing[clip] = audio;
                     audio.play();
                 }
             }, diff);
@@ -136,6 +139,7 @@ function playAt(clip, time, offset) {
     }
 }
 
+var stopPlaying = false;
 function realtime() {
     var now = getTime();
     var hours = now.getUTCHours();
@@ -184,18 +188,37 @@ function realtime() {
     playAt(station + "_at_the_tone2", 52500);
 
     // Play voice time
-    playAt(function() { timeAudio(station, hours, minutes, true) }, 53500);
+    var voiceStart = station == "h" ? 45000 : 53500;
+    playAt(function() { timeAudio(station, hours, minutes, true) }, voiceStart );
 
     // "coordinated universal time"
     playAt(station + "_utc2", 56750);
 
     playAt(function() {updateClock()}, ((secs+1)*1000) % 60000);
-    setTimeout(realtime, 200);
+
+    if(stopPlaying) {
+        stopPlaying = false;
+        for (var key in playing) {
+            if (playing.hasOwnProperty(key)) {
+                playing[key].pause();
+                delete playing[key];
+            }
+        }
+        playing = {};
+        queue = {};
+        startMs = null;
+    } else {
+        setTimeout(realtime, 200);
+    }
+}
+
+function stop() {
+    stopPlaying = true;
+    document.getElementById("go").disabled = false;
 }
 
 function go() {
     realtime();
-
     document.getElementById("go").disabled = true;
 }
 
