@@ -1,10 +1,29 @@
 if(1) {
-    var startTime = '1995-12-17T19:04:40Z';
+    var startTime = '1995-12-17T19:28:50Z';
 } else {
     var startTime = null;
 }
 
 var clips = {};
+
+var player = {
+    playing: {},
+    stopped: false,
+    play: function(clip) {
+        this.playing[clip] = 1;
+        clip.play()
+    },
+    stop: function() {
+        for (var key in this.playing) {
+            if (this.playing.hasOwnProperty(key)) {
+                this.playing[key].pause();
+            }
+        }
+        this.playing = {};
+    },
+}
+
+var playing = {};
 
 function getClip(name) {
     if(clips[name] == null) {
@@ -108,7 +127,6 @@ function timeAudio(station, hours, minutes, nextMinute) {
 }
 
 var queue = {};
-var playing = {};
 
 function playAt(clip, time, offset) {
     var now = getTime();
@@ -145,6 +163,9 @@ function playAt(clip, time, offset) {
 
 var stopPlaying = false;
 function realtime() {
+    if(muted) {
+        return;
+    }
     var now = getTime();
     var hours = now.getUTCHours();
     var minutes = now.getUTCMinutes();
@@ -200,20 +221,19 @@ function realtime() {
     // "coordinated universal time"
     playAt(station + "_utc2", station == "h" ? 49750 : 56750);
 
-    if(stopPlaying) {
-        stopPlaying = false;
-        for (var key in playing) {
-            if (playing.hasOwnProperty(key)) {
-                playing[key].pause();
-                delete playing[key];
-            }
+    setTimeout(realtime, 200);
+}
+
+function stopClips() {
+    for (var key in playing) {
+        if (playing.hasOwnProperty(key)) {
+            playing[key].pause();
+            delete playing[key];
         }
-        playing = {};
-        queue = {};
-        startMs = null;
-    } else {
-        setTimeout(realtime, 200);
     }
+    playing = {};
+    queue = {};
+    //startMs = null;
 }
 
 function stop() {
@@ -230,5 +250,26 @@ function getStation() {
     return document.getElementById("station").value;
 }
 
+function setStation() {
+    var stationClass = getStation() == "h" ? "wwvh" : "wwv";
+    document.getElementById("body").className = "background " + stationClass;
+}
+
+var muted = false;
+function audioToggle() {
+    muted = !muted;
+    el = document.getElementById("audio");
+    el.src = muted ? "unmute.svg" : "mute.svg";
+
+    if(muted) {
+        stopClips();
+    } else {
+        realtime();
+    }
+}
+
+audioToggle();
 preload();
+setStation();
 runningClock();
+realtime();

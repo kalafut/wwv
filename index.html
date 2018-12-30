@@ -1,13 +1,47 @@
 <html>
-<body>
-<button id="go" onclick="go();">Go</button>
-<button id="stop" onclick="stop();">Stop</button>
-<select id="station">
-  <option value="v">WWV (Fort Collins, CO)</option>
+  <head>
+    <style>
+      .background {
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .wwv {
+        background-image: url("wwv_02.jpg");
+      }
+
+      .wwvh {
+        background-image: url("wwvh7.jpg");
+      }
+      select {
+        width: 250px;
+        padding: 5px 35px 5px 5px;
+        font-size: 16px;
+        border: 0px;
+        height: 34px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: rgba(255,255,255, 0.0) ;
+      }
+    </style>
+  </head>
+<body id="body" style="position: relative;">
+<!--
+<button id="go" onclick="go()">Go</button>
+<button id="stop" onclick="stop()">Stop</button>
+-->
+<div style="position: absolute; top: 25; left: 15;">
+<span id="clock" style="color:#101b27; font-family: monospace; font-size: 54pt; margin: 0"></span>
+<img id="audio" onclick="audioToggle()" height="20px"/>
+</div>
+
+
+<select id="station" onchange="setStation()" style="position: absolute; top: 0; right: 100; font-family:monospace; color: black;">
+  <option selected value="v">WWV (Fort Collins, CO)</option>
   <option value="h">WWVH (Kauai, HI)</option>
 </select>
-<p id="clock"></p>
-
+<a href="about.html" style="font-size: 16px; position: absolute; top: 0; right: 0; text-decoration: none; color: black; font-family: monospace;">About</a>
 
 <script src="app.js"></script>
 </body>
