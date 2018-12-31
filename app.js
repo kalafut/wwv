@@ -1,5 +1,5 @@
 if(1) {
-    var startTime = '1995-12-17T19:28:50Z';
+    var startTime = '1995-12-17T19:28:40Z';
 } else {
     var startTime = null;
 }
@@ -7,6 +7,7 @@ if(1) {
 var clips = {};
 
 var player = {
+    queue: {},
     playing: {},
     stopped: false,
     play: function(clip) {
@@ -20,6 +21,40 @@ var player = {
             }
         }
         this.playing = {};
+    },
+    playAt: function(clip, time, offset) {
+        var self = this;
+        var now = getTime();
+        var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
+
+        var diff = time - ms;
+        if(diff < 0) {
+            diff += 60000;
+        };
+
+        if(diff < 500) {
+            if(this.queue[clip] == null) {
+                this.queue[clip] = true;
+                setTimeout(function() {
+                    if(typeof(clip) === "function") {
+                        clip();
+                        self.queue[clip] = null;
+                    } else {
+                        var audio = getClip(clip);
+                        if(offset != null) {
+                            audio.currentTime = offset / 1000;
+                        }
+                        audio.onended = function() {
+                            self.queue[clip] = null;
+                            delete self.playing[clip];
+                        }
+                        console.log(clip);
+                        self.playing[clip] = audio;
+                        audio.play();
+                    }
+                }, diff);
+            }
+        }
     },
 }
 
@@ -126,41 +161,6 @@ function timeAudio(station, hours, minutes, nextMinute) {
     })
 }
 
-var queue = {};
-
-function playAt(clip, time, offset) {
-    var now = getTime();
-    var ms = 1000*now.getUTCSeconds() + now.getUTCMilliseconds();
-
-    var diff = time - ms;
-    if(diff < 0) {
-        diff += 60000;
-    };
-
-    if(diff < 500) {
-        if(queue[clip] == null) {
-            queue[clip] = true;
-            setTimeout(function() {
-                if(typeof(clip) === "function") {
-                    clip();
-                    queue[clip] = null;
-                } else {
-                    var audio = getClip(clip);
-                    if(offset != null) {
-                        audio.currentTime = offset / 1000;
-                    }
-                    audio.onended = function() {
-                        queue[clip] = null;
-                        delete playing[clip];
-                    }
-                    playing[clip] = audio;
-                    audio.play();
-                }
-            }, diff);
-        }
-    }
-}
-
 var stopPlaying = false;
 function realtime() {
     if(muted) {
@@ -175,9 +175,9 @@ function realtime() {
     var station = getStation();
 
     if(minutes == 59) {
-        playAt("hour_pulse", 0);
+        player.playAt("hour_pulse", 0);
     } else {
-        playAt(station + "_minute_pulse", 0);
+        player.playAt(station + "_minute_pulse", 0);
     }
 
     // pick correct tone file
@@ -203,23 +203,23 @@ function realtime() {
 
     if(secs >= 1 && secs < clipDuration) {
         var offset = ms - 1000;
-        playAt(clip, ms + 50, offset);
+        player.playAt(clip, ms + 50, offset);
     } else {
-        playAt(clip, 1000);
+        player.playAt(clip, 1000);
     }
 
     // Pulses and voice time
     if(secs > clipDuration - 1 && secs != 58) {
-        playAt(station + "_pulse", ((secs+1)*1000) % 60000);
+        player.playAt(station + "_pulse", ((secs+1)*1000) % 60000);
     }
 
-    playAt(station + "_at_the_tone2",  station == "h" ? 45500 : 52500);
+    player.playAt(station + "_at_the_tone2",  station == "h" ? 45500 : 52500);
 
     // Play voice time
-    playAt(function() { timeAudio(station, hours, minutes, true) }, station == "h" ? 46500 : 53500 );
+    player.playAt(function() { timeAudio(station, hours, minutes, true) }, station == "h" ? 46500 : 53500 );
 
     // "coordinated universal time"
-    playAt(station + "_utc2", station == "h" ? 49750 : 56750);
+    player.playAt(station + "_utc2", station == "h" ? 49750 : 56750);
 
     setTimeout(realtime, 200);
 }

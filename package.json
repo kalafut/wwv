@@ -1,0 +1,20 @@
+{
+  "name": "wwv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/kalafut/wwv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/kalafut/wwv#readme",
+  "devDependencies": {
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2"
+  }
+}
