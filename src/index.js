@@ -75,14 +75,15 @@ function realtime() {
     player.playAt(clip, 1000);
   }
 
-  // Pulses and voice time
+  // Pulses
   if (secs > clipDuration - 1 && secs !== 58) {
     player.playAt(`${station}_pulse`, ((secs + 1) * 1000) % 60000);
   }
 
+  // "at the tone"
   player.playAt(`${station}_at_the_tone2`, (station === 'h') ? 45500 : 52500);
 
-  // Play voice time announcing
+  // Voice announcement for next minute
   minutes += 1;
   if (minutes > 59) {
     minutes = 0;
@@ -111,19 +112,12 @@ function realtime() {
   setTimeout(realtime, 200);
 }
 
-// function stop() {
-//    stopPlaying = true;
-//    document.getElementById("go").disabled = false;
-// }
-//
-// function go() {
-//    realtime();
-//    document.getElementById("go").disabled = true;
-// }
-
 function setStation() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
   document.getElementById('body').className = `background ${stationClass}`;
+
+  player.stop();
+  player.start();
 }
 
 function audioToggle() {
@@ -138,6 +132,9 @@ function audioToggle() {
     realtime();
   }
 }
+
+document.getElementById('audio').addEventListener('click', audioToggle);
+document.getElementById('station').addEventListener('change', setStation);
 
 audioToggle();
 setStation();
