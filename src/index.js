@@ -20,10 +20,15 @@ function getStation() {
 
 let nextText = '';
 function runningClock() {
+  const now = getTime();
+
+  if (nextText === '') {
+    nextText = now.toISOString().substring(11, 19);
+  }
+
   const clock = document.getElementById('clock');
   clock.innerHTML = nextText;
 
-  const now = getTime();
   const delay = 1000 - now.getUTCMilliseconds();
   now.setUTCSeconds(now.getUTCSeconds() + 1);
   nextText = now.toISOString().substring(11, 19);
