@@ -70,14 +70,23 @@ function realtime() {
     clip = '_main_440';
   }
 
-  clip = station + clip;
-  const clipDuration = getClip(clip).duration;
+  if ((station === 'v' && (minutes === 29 || (minutes >= 43 && minutes <= 52) || minutes === 59))
+    || (station === 'h' && (minutes === 0 || (minutes >= 8 && minutes <= 11) || (minutes >= 14 && minutes <= 19) || minutes === 30))
+  ) {
+    clip = '';
+  }
 
-  if (secs >= 1 && secs < clipDuration) {
-    const offset = ms - 1000;
-    player.playAt(clip, ms + 50, offset);
-  } else {
-    player.playAt(clip, 1000);
+  let clipDuration = 0;
+
+  if (clip !== '') {
+    clip = station + clip;
+    clipDuration = getClip(clip).duration;
+
+    if (secs >= 1 && secs < clipDuration) {
+      player.playAt(clip, ms + 50, ms - 1000);
+    } else {
+      player.playAt(clip, 1000);
+    }
   }
 
   // Pulses

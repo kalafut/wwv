@@ -1,8 +1,8 @@
 let startTime = null;
-const override = false;
+const override = true;
 
 if (override) {
-  startTime = '1995-12-17T19:29:50Z';
+  startTime = '1995-12-17T19:08:10Z';
 }
 
 let startMs = null;
