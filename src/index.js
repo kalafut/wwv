@@ -125,6 +125,19 @@ function setStation() {
   player.start();
 }
 
+// Utility to play all number clips for easy comparison
+//
+// function sayAll(i) {
+//  const audio = getClip(`v_${i}`);
+//  audio.onended = () => {
+//    if (i < 60) {
+//      sayAll(i + 1);
+//    }
+//  };
+//  audio.play();
+// }
+// sayAll(0);
+
 function audioToggle() {
   muted = !muted;
   const el = document.getElementById('audio');

@@ -7,16 +7,17 @@
 <button id="go" onclick="go()">Go</button>
 <button id="stop" onclick="stop()">Stop</button>
 -->
-<div style="position: absolute; top: 25; left: 15;">
+<div id="clock_block">
   <span id="clock" style="color:#101b27; font-size: 54pt; margin: 0; width: 4em; display: inline-block;"></span>
   <img id="audio" height="20"/>
 </div>
 
-<select id="station" style="position: absolute; top: 0; right: 100; color: black;">
+<select id="station">
   <option selected value="v">WWV (Fort Collins, CO)</option>
   <option value="h">WWVH (Kauai, HI)</option>
 </select>
-<a href="about.html" style="font-size: 16px; position: absolute; top: 0; right: 0; text-decoration: none; color: black; ">About</a>
+
+<a id="about" href="about.html">About</a>
 
 <script src="main.js"></script>
 </body>

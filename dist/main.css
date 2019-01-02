@@ -7,6 +7,38 @@ body {
 		background-repeat: no-repeat;
 }
 
+#clock_block {
+	position: absolute;
+	top: 25;
+	left: 50;
+}
+
+#clock {
+  	color:#101b27;
+	font-size: 54pt;
+	margin: 0;
+	width: 4em;
+	display: inline-block;
+}
+
+#station {
+	position: absolute;
+	top: 0;
+	right: 100;
+	color: black;
+	font-size: 20px;
+}
+
+#about {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 20px;
+	text-decoration: none;
+	color: black;
+	padding: 5;
+}
+
 .wwv {
 		background-image: url("wwv_02.jpg");
 }
@@ -24,5 +56,5 @@ select {
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
-		background-color: rgba(255,255,255, 0.0) ;
+		background-color: rgba(255,255,255, 0.2) ;
 }
