@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MarkdownPlugin = require('markdown-html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -10,11 +11,15 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       './src/index.html',
-      './src/about.html',
       './src/main.css',
       'images/*',
       'clips/*',
     ]),
+    new MarkdownPlugin({
+      filePath: '../src',
+      exportPath: '../dist/',
+      // template: 'template.html'
+    }),
   ],
   module: {
     rules: [
@@ -38,17 +43,6 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
-      },
-      {
-        test: /\.(html)$/,
-        use: [
-          {
-            loader: 'copy-webpack-plugin',
-            options: {
-              name: '[name].[ext]',
-            },
-          },
-        ],
       },
     ],
   },
