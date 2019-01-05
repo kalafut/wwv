@@ -1,4 +1,5 @@
 /* global document */
+import mobileCheck from './mobile';
 import { Player, getClip, registerReadyEvent } from './player';
 import getTime from './time';
 
@@ -147,6 +148,10 @@ document.getElementById('start').addEventListener('click', () => {
   document.getElementById('loadingBox').style.display = 'none';
   loop();
 });
+
+if (mobileCheck()) {
+  document.getElementById('mobileMsg').style.display = 'inline';
+}
 
 registerReadyEvent(() => {
   document.getElementById('start').disabled = false;
