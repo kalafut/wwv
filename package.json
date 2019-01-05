@@ -20,6 +20,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
+    "copy-webpack-plugin": "^4.6.0",
     "eslint": "^5.11.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.0",

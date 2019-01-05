@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -6,6 +7,15 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      './src/index.html',
+      './src/about.html',
+      './src/main.css',
+      'images/*',
+      'clips/*',
+    ]),
+  ],
   module: {
     rules: [
       {
@@ -28,6 +38,17 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
+      },
+      {
+        test: /\.(html)$/,
+        use: [
+          {
+            loader: 'copy-webpack-plugin',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
