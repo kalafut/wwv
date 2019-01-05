@@ -1,32 +1,55 @@
 /* global Audio */
 import getTime from './time';
 
+const staticClips = [
+  '_minute_pulse',
+  '_main_440',
+  '_main_500',
+  '_main_600',
+  '_pulse_gap',
+  '_at_the_tone',
+  '_utc2',
+  '_ident',
+  '_hour',
+  '_hours',
+  '_minute',
+  '_minutes',
+  '_pulse',
+];
+
 const clips = {};
+
+// Load v and h versions of all static clips and numbers
+const needed = (staticClips.length * 2) + (60 * 2);
+let loaded = 0;
+let readyEvent;
+
+export function registerReadyEvent(fn) {
+  readyEvent = fn;
+}
+
+function loadedAudio() {
+  loaded += 1;
+  if (loaded >= needed) {
+    if (readyEvent !== null) {
+      readyEvent();
+    }
+  }
+}
 
 export function getClip(name) {
   if (clips[name] == null) {
-    clips[name] = new Audio(`clips/${name}.mp3`);
+    const audio = new Audio(`clips/${name}.mp3`);
+    audio.addEventListener('canplaythrough', loadedAudio, false);
+    audio.load();
+    clips[name] = audio;
   }
 
   return clips[name];
 }
 
 function preload() {
-  [
-    '_minute_pulse',
-    '_main_440',
-    '_main_500',
-    '_main_600',
-    '_pulse_gap',
-    '_at_the_tone',
-    '_utc2',
-    '_ident',
-    '_hour',
-    '_hours',
-    '_minute',
-    '_minutes',
-    '_pulse',
-  ].forEach((clip) => {
+  staticClips.forEach((clip) => {
     getClip(`v${clip}`);
     getClip(`h${clip}`);
   });

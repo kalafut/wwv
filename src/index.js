@@ -1,9 +1,8 @@
-/* global document, window */
-import { Player, getClip } from './player';
+/* global document */
+import { Player, getClip, registerReadyEvent } from './player';
 import getTime from './time';
 
 const player = new Player();
-let muted = false;
 
 function pluralize(s, amt) {
   let ret = (s);
@@ -35,11 +34,7 @@ function runningClock() {
   setTimeout(runningClock, delay);
 }
 
-function realtime() {
-  if (muted) {
-    return;
-  }
-
+function loop() {
   const now = getTime();
   let hours = now.getUTCHours();
   let minutes = now.getUTCMinutes();
@@ -123,7 +118,7 @@ function realtime() {
   // "coordinated universal time"
   player.playAt(`${station}_utc2`, (station === 'h') ? 49750 : 56750);
 
-  setTimeout(realtime, 200);
+  setTimeout(loop, 200);
 }
 
 function setStation() {
@@ -147,24 +142,17 @@ function setStation() {
 // }
 // sayAll(0);
 
-function audioToggle() {
-  muted = !muted;
-  const el = document.getElementById('audio');
-  el.src = muted ? 'unmute.svg' : 'mute.svg';
-
-  if (muted) {
-    player.stop();
-  } else {
-    player.start();
-    realtime();
-  }
-}
-
-document.getElementById('audio').addEventListener('click', audioToggle);
 document.getElementById('station').addEventListener('change', setStation);
+document.getElementById('start').addEventListener('click', () => {
+  document.getElementById('loadingBox').style.display = 'none';
+  loop();
+});
 
-audioToggle();
+registerReadyEvent(() => {
+  document.getElementById('start').disabled = false;
+  document.getElementById('loadingMsg').style.display = 'none';
+  player.start();
+});
+
 setStation();
 runningClock();
-realtime();
-window.audioToggle = audioToggle;
