@@ -149,8 +149,12 @@ document.getElementById('start').addEventListener('click', () => {
   loop();
 });
 
+document.getElementById('mobileAccept').addEventListener('click', () => {
+
+});
+
 if (mobileCheck()) {
-  document.getElementById('mobileMsg').style.display = 'inline';
+  document.getElementById('mobileWarning').style.display = 'block';
 }
 
 registerReadyEvent(() => {
