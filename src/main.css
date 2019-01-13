@@ -2,6 +2,11 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
+button {
+	display: block;
+	margin: 0 auto;
+}
+
 .background {
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -11,6 +16,25 @@ body {
 	position: absolute;
 	top: 15px;
 	left: 15px;
+}
+
+.alert-box {
+	margin: 0 auto;
+	width: 40%;
+	background: red;
+	border: 2px solid red;
+	border-radius: 5px;
+
+	position: relative;
+	top: 50%;
+	transform: perspective(1px) translateY(-50%);
+}
+
+.center-div
+{
+     position: relative;
+     top: 50%;
+     transform: perspective(1px) translateY(-50%);
 }
 
 #clock {

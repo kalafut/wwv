@@ -24,18 +24,19 @@
 </select>
 
 <a id="about" href="about.html">About</a>
-<div id="loadingBox">
-  Some intro text.
-  <span id="mobileMsg" style="display: none">Mobile</span>
-  <span id="loadingMsg">Loading!</span>
-  <button id="start" disabled="disabled">Play</button>
+
+<div id="loadingBox" style="display: none" class="alert-box">
+  Welcome! This site will simulate the audio broadcast by WWV and WWVH
+  using your current computer time. Press Play to get started.
+  <br>
+  <button id="startButton" disabled="disabled">Loading audio...</button>
 </div>
 
-<div id="mobileWarning" style="display: none">
+<div id="mobileWarning" style="display: none" class="alert-box">
   It looks like you may by using a mobile browser. Unfortunately, the audio doesn't yet play well
   in mobile environments.
-
-  <button id="mobileAccept">Understood. Let's try anyway!</button>
+  <br>
+  <button id="mobileAccept">Let's try anyway!</button>
 </div>
 
 <script src="main.js"></script>

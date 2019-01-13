@@ -55,7 +55,7 @@ function loop() {
   }
 
   // pick correct tone file
-  if ((minutes + 1) % 2 === 0) {
+  if ((minutes + 1) % 2 === (station === 'v' ? 0 : 1)) {
     clip = '_main_500';
   } else {
     clip = '_main_600';
@@ -148,22 +148,26 @@ function setStation() {
 // sayAll(0);
 
 $('station').addEventListener('change', setStation);
-$('start').addEventListener('click', () => {
+$('startButton').addEventListener('click', () => {
   $('loadingBox').style.display = 'none';
   loop();
 });
 
 function init() {
+  $('loadingBox').style.display = 'block';
   preload(() => {
-    $('start').disabled = false;
-    $('loadingMsg').style.display = 'none';
+    const el = $('startButton');
+    el.disabled = false;
+    el.innerHTML = 'Play';
+
     player.unlock();
   });
 }
 
-if (false || mobileCheck()) {
+if (true || mobileCheck()) {
   $('mobileWarning').style.display = 'block';
   $('mobileAccept').addEventListener('click', () => {
+    $('mobileWarning').style.display = 'none';
     init();
   });
 } else {
