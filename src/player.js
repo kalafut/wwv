@@ -22,17 +22,13 @@ const clips = {};
 // Load v and h versions of all static clips and numbers
 const needed = (staticClips.length * 2) + (60 * 2);
 let loaded = 0;
-let readyEvent;
-
-export function registerReadyEvent(fn) {
-  readyEvent = fn;
-}
+let onReady;
 
 function loadedAudio() {
   loaded += 1;
   if (loaded >= needed) {
-    if (readyEvent !== null) {
-      readyEvent();
+    if (onReady !== null) {
+      onReady();
     }
   }
 }
@@ -48,7 +44,8 @@ export function getClip(name) {
   return clips[name];
 }
 
-function preload() {
+export function preload(readyFn) {
+  onReady = readyFn;
   staticClips.forEach((clip) => {
     getClip(`v${clip}`);
     getClip(`h${clip}`);
@@ -65,7 +62,7 @@ export class Player {
   constructor() {
     this.queue = {};
     this.playing = {};
-    this.stopped = true;
+    this.locked = true;
   }
 
   play(clip) {
@@ -73,17 +70,17 @@ export class Player {
     clip.play();
   }
 
-  stop() {
+  lock() {
     Object.keys(this.playing).forEach((key) => {
       this.playing[key].pause();
     });
     this.queue = {};
     this.playing = {};
-    this.stopped = true;
+    this.locked = true;
   }
 
-  start() {
-    this.stopped = false;
+  unlock() {
+    this.locked = false;
   }
 
   playAt(clip, time, offset, customId) {
@@ -102,7 +99,7 @@ export class Player {
       if (this.queue[queueId] == null) {
         this.queue[queueId] = true;
         setTimeout(() => {
-          if (!this.stopped) {
+          if (!this.locked) {
             if (offset != null) {
               audio.currentTime = offset / 1000;
             }
@@ -120,5 +117,3 @@ export class Player {
     return audio;
   }
 }
-
-preload();

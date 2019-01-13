@@ -1,7 +1,11 @@
 /* global document */
 import mobileCheck from './mobile';
-import { Player, getClip, registerReadyEvent } from './player';
+import { Player, getClip, preload } from './player';
 import getTime from './time';
+
+function $(id) {
+  return document.getElementById(id);
+}
 
 const player = new Player();
 
@@ -15,7 +19,7 @@ function pluralize(s, amt) {
 }
 
 function getStation() {
-  return document.getElementById('station').value;
+  return $('station').value;
 }
 
 let nextText = '';
@@ -26,7 +30,7 @@ function runningClock() {
     nextText = now.toISOString().substring(11, 19);
   }
 
-  const clock = document.getElementById('clock');
+  const clock = $('clock');
   clock.innerHTML = nextText;
 
   const delay = 1000 - now.getUTCMilliseconds();
@@ -124,10 +128,10 @@ function loop() {
 
 function setStation() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
-  document.getElementById('body').className = `background ${stationClass}`;
+  $('body').className = `background ${stationClass}`;
 
-  player.stop();
-  player.start();
+  player.lock();
+  player.unlock();
 }
 
 // Utility to play all number clips for easy comparison
@@ -143,25 +147,28 @@ function setStation() {
 // }
 // sayAll(0);
 
-document.getElementById('station').addEventListener('change', setStation);
-document.getElementById('start').addEventListener('click', () => {
-  document.getElementById('loadingBox').style.display = 'none';
+$('station').addEventListener('change', setStation);
+$('start').addEventListener('click', () => {
+  $('loadingBox').style.display = 'none';
   loop();
 });
 
-document.getElementById('mobileAccept').addEventListener('click', () => {
-
-});
-
-if (mobileCheck()) {
-  document.getElementById('mobileWarning').style.display = 'block';
+function init() {
+  preload(() => {
+    $('start').disabled = false;
+    $('loadingMsg').style.display = 'none';
+    player.unlock();
+  });
 }
 
-registerReadyEvent(() => {
-  document.getElementById('start').disabled = false;
-  document.getElementById('loadingMsg').style.display = 'none';
-  player.start();
-});
+if (false || mobileCheck()) {
+  $('mobileWarning').style.display = 'block';
+  $('mobileAccept').addEventListener('click', () => {
+    init();
+  });
+} else {
+  init();
+}
 
 setStation();
 runningClock();
