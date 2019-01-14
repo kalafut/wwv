@@ -2,6 +2,39 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
+a {
+	text-decoration: none;
+	color: #5599ff;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.clock {
+	display: flex;
+	justify-content: center;
+}
+
+.message {
+	display: flex;
+	justify-content: center;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.none {
+	display: none;
+}
+
 button {
 	display: block;
 	margin: 0 auto;
@@ -12,22 +45,15 @@ button {
 	background-repeat: no-repeat;
 }
 
-#clock_block {
-	position: absolute;
-	top: 15px;
-	left: 15px;
-}
-
 .alert-box {
-	margin: 0 auto;
 	width: 40%;
-	background: red;
-	border: 2px solid red;
 	border-radius: 5px;
+	margin-top: 25px;
+	padding: 15px;
 
-	position: relative;
-	top: 50%;
-	transform: perspective(1px) translateY(-50%);
+	background: #101b27;
+	color: #f3f3f3;
+	font-size: 16pt;
 }
 
 .center-div
@@ -45,7 +71,7 @@ button {
 	display: inline-block;
 }
 
-#station {
+#_station {
 	position: absolute;
 	top: 0px;
 	right: 100px;
@@ -53,7 +79,7 @@ button {
 	font-size: 20px;
 }
 
-#about {
+#_about {
 	position: absolute;
 	top: 0px;
 	right: 0px;

@@ -149,12 +149,14 @@ function setStation() {
 
 $('station').addEventListener('change', setStation);
 $('startButton').addEventListener('click', () => {
-  $('loadingBox').style.display = 'none';
+  $('loadingBox').classList.add('none');
+  $('header').classList.remove('hidden');
+  runningClock();
   loop();
 });
 
 function init() {
-  $('loadingBox').style.display = 'block';
+  $('loadingBox').classList.remove('none');
   preload(() => {
     const el = $('startButton');
     el.disabled = false;
@@ -165,9 +167,9 @@ function init() {
 }
 
 if (true || mobileCheck()) {
-  $('mobileWarning').style.display = 'block';
+  $('mobileWarning').classList.remove('none');
   $('mobileAccept').addEventListener('click', () => {
-    $('mobileWarning').style.display = 'none';
+    $('mobileWarning').classList.add('none');
     init();
   });
 } else {
@@ -175,4 +177,4 @@ if (true || mobileCheck()) {
 }
 
 setStation();
-runningClock();
+// runningClock();

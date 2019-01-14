@@ -13,32 +13,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
-<body id="body" style="position: relative;">
-<div id="clock_block">
-  <span id="clock" style="color:#101b27;"></span>
-</div>
+  <body id="body">
+    <div class="main">
+      <div id="header" class="header hidden">
+        <select id="station">
+          <option selected value="v">WWV (Fort Collins, CO)</option>
+          <option value="h">WWVH (Kauai, HI)</option>
+        </select>
+        <a id="about" href="about.html">About</a>
+      </div>
 
-<select id="station">
-  <option selected value="v">WWV (Fort Collins, CO)</option>
-  <option value="h">WWVH (Kauai, HI)</option>
-</select>
+      <div class="clock">
+        <div id="clock_block">
+          <span id="clock" style="color:#101b27;"></span>
+        </div>
+      </div>
 
-<a id="about" href="about.html">About</a>
+      <div class="message">
+        <div id="loadingBox" class="alert-box none">
+          Welcome! This site will simulate the audio broadcast by WWV and WWVH
+          using your current computer time.
+          <br>
+          <br>
+          Press Play to start listening.
+          <br>
+          <br>
+          <button id="startButton" disabled="disabled">Loading audio...</button>
+        </div>
 
-<div id="loadingBox" style="display: none" class="alert-box">
-  Welcome! This site will simulate the audio broadcast by WWV and WWVH
-  using your current computer time. Press Play to get started.
-  <br>
-  <button id="startButton" disabled="disabled">Loading audio...</button>
-</div>
+        <div id="mobileWarning" class="alert-box none">
+          It looks like you may by using a mobile browser. Unfortunately, the dynamic audio doesn't yet play well
+          in mobile environments. Try again in a desktop browser, or visit the <a id="about" href="about.html">About</a> page for more information about the project and some station samples.
+          <br>
+          <br>
+          <button id="mobileAccept">Let's try anyway!</button>
+        </div>
+      </div>
 
-<div id="mobileWarning" style="display: none" class="alert-box">
-  It looks like you may by using a mobile browser. Unfortunately, the audio doesn't yet play well
-  in mobile environments.
-  <br>
-  <button id="mobileAccept">Let's try anyway!</button>
-</div>
+    </div>
+    <script src="main.js"></script>
 
-<script src="main.js"></script>
-</body>
+  </body>
 </html>
