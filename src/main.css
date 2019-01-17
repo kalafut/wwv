@@ -7,14 +7,28 @@ a {
 	color: #5599ff;
 }
 
+td {
+	vertical-align: top;
+}
+
 .main {
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
 }
 
 .header {
 	display: flex;
 	justify-content: flex-end;
+}
+
+
+
+.data table {
+	background: #101b27;
+	color: #f3f3f3;
+	border-radius: 5px;
+	padding: 5px;
 }
 
 .clock {
@@ -26,6 +40,12 @@ a {
 	display: flex;
 	justify-content: center;
 }
+
+.filler {
+	display: flex;
+	flex: 1;
+}
+
 
 .hidden {
 	visibility: hidden;
