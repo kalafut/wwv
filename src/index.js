@@ -1,5 +1,4 @@
 /* global document */
-import mobileCheck from './mobile';
 import { Player, getClip, preload } from './player';
 import getTime from './time';
 
@@ -166,16 +165,7 @@ function init() {
   });
 }
 
-// if (true || mobileCheck()) {
-if (false && mobileCheck()) {
-  $('mobileWarning').classList.remove('none');
-  $('mobileAccept').addEventListener('click', () => {
-    $('mobileWarning').classList.add('none');
-    init();
-  });
-} else {
-  init();
-}
+init();
 
 setStation();
 // runningClock();
