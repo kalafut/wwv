@@ -1,6 +1,6 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MarkdownPlugin = require('markdown-html-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -9,18 +9,16 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new CopyWebpackPlugin([
-      './src/index.html',
-      './src/main.css',
-      'images/*',
-      'clips/*',
-    ]),
     new MarkdownPlugin({
       filePath: '../src',
       exportPath: '../dist/',
       // template: 'template.html'
     }),
+    new WebpackShellPlugin({
+      onBuildEnd: ['./finalize.sh'],
+    }),
   ],
+
   module: {
     rules: [
       {
