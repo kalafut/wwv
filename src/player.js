@@ -1,4 +1,4 @@
-/* global Audio */
+import { Howl } from 'howler';
 import getTime from './time';
 
 const staticClips = [
@@ -24,7 +24,7 @@ const needed = (staticClips.length * 2) + (60 * 2);
 let loaded = 0;
 let onReady;
 
-function loadedAudio() {
+export function loadedAudio() {
   loaded += 1;
   if (loaded >= needed) {
     if (onReady !== null) {
@@ -35,9 +35,11 @@ function loadedAudio() {
 
 export function getClip(name) {
   if (clips[name] == null) {
-    const audio = new Audio(`clips/${name}.mp3`);
-    audio.addEventListener('canplaythrough', loadedAudio, false);
-    audio.load();
+    // const audio = new Audio(`clips/${name}.mp3`);
+    const audio = new Howl({ src: `clips/${name}.mp3` });
+    // audio.addEventListener('canplaythrough', loadedAudio, false);
+    audio.on('load', loadedAudio);
+    // audio.load();
     clips[name] = audio;
   }
 
@@ -55,6 +57,7 @@ export function preload(readyFn) {
     getClip(`v_${t}`);
     getClip(`h_${t}`);
   }
+  // onReady();
 }
 
 
@@ -101,12 +104,12 @@ export class Player {
         setTimeout(() => {
           if (!this.locked) {
             if (offset != null) {
-              audio.currentTime = offset / 1000;
+              audio.seek(offset / 1000);
             }
-            audio.onended = () => {
+            audio.on('end', () => {
               delete this.queue[queueId];
               delete this.playing[queueId];
-            };
+            });
             this.playing[queueId] = audio;
             audio.play();
           }

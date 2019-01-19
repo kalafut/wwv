@@ -80,7 +80,7 @@ function loop() {
 
   if (clip !== '') {
     clip = station + clip;
-    clipDuration = getClip(clip).duration;
+    clipDuration = getClip(clip).duration();
 
     if (secs >= 1 && secs < clipDuration) {
       player.playAt(clip, ms + 50, ms - 1000);
@@ -111,13 +111,13 @@ function loop() {
 
   clip = player.playAt(`${station}_${hours}`, vtStart, 0, 'vt1');
 
-  vtStart += clip.duration * 1000;
+  vtStart += clip.duration() * 1000;
   clip = player.playAt(`${station}_${pluralize('hour', hours)}`, vtStart, 0, 'vt2');
 
-  vtStart += clip.duration * 1000 + 100;
+  vtStart += clip.duration() * 1000 + 100;
   clip = player.playAt(`${station}_${minutes}`, vtStart, 0, 'vt3');
 
-  vtStart += clip.duration * 1000 + 100;
+  vtStart += clip.duration() * 1000 + 100;
   clip = player.playAt(`${station}_${pluralize('minute', minutes)}`, vtStart, 0, 'vt4');
 
   // "coordinated universal time"
@@ -166,7 +166,8 @@ function init() {
   });
 }
 
-if (true || mobileCheck()) {
+// if (true || mobileCheck()) {
+if (false && mobileCheck()) {
   $('mobileWarning').classList.remove('none');
   $('mobileAccept').addEventListener('click', () => {
     $('mobileWarning').classList.add('none');
