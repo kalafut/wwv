@@ -20,7 +20,7 @@ const staticClips = [
 const clips = {};
 
 // Load v and h versions of all static clips and numbers
-const needed = (staticClips.length * 2) + (60 * 2);
+const needed = (staticClips.length * 2) + 8;
 let loaded = 0;
 let onReady;
 
@@ -28,18 +28,17 @@ export function loadedAudio() {
   loaded += 1;
   if (loaded >= needed) {
     if (onReady !== null) {
+      console.log(onReady);
       onReady();
+      onReady = null;
     }
   }
 }
 
 export function getClip(name) {
   if (clips[name] == null) {
-    // const audio = new Audio(`clips/${name}.mp3`);
     const audio = new Howl({ src: `clips/${name}.mp3` });
-    // audio.addEventListener('canplaythrough', loadedAudio, false);
     audio.on('load', loadedAudio);
-    // audio.load();
     clips[name] = audio;
   }
 
@@ -47,17 +46,28 @@ export function getClip(name) {
 }
 
 export function preload(readyFn) {
-  onReady = readyFn;
+  if (typeof readyFn !== 'undefined') {
+    onReady = readyFn;
+  }
   staticClips.forEach((clip) => {
     getClip(`v${clip}`);
     getClip(`h${clip}`);
   });
 
-  for (let t = 0; t < 60; t += 1) {
-    getClip(`v_${t}`);
-    getClip(`h_${t}`);
+  let time = new Date(getTime().getTime() + 60 * 1000);
+  for (let t = 0; t < 3; t += 1) {
+    const hours = time.getUTCHours();
+    const minutes = time.getUTCMinutes();
+    getClip(`v_${hours}`);
+    getClip(`v_${minutes}`);
+    getClip(`h_${hours}`);
+    getClip(`h_${minutes}`);
+
+    time = new Date(time.getTime() + 60 * 1000);
   }
-  // onReady();
+  setTimeout(() => {
+    preload();
+  }, 6000);
 }
 
 

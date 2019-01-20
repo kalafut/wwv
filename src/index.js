@@ -1,5 +1,5 @@
 /* global document */
-import { Player, getClip } from './player';
+import { Player, getClip, preload } from './player';
 import getTime from './time';
 
 function $(id) {
@@ -151,21 +151,21 @@ document.querySelectorAll('input[name="station"]').forEach((el) => {
 });
 
 $('startButton').addEventListener('click', () => {
-  $('loadingBox').classList.add('none');
-  $('header').classList.remove('hidden');
+  $('loadingBox').classList.add('hidden');
+  $('clock_block').classList.remove('hidden');
   runningClock();
   loop();
 });
 
 function init() {
   $('loadingBox').classList.remove('none');
-  // preload(() => {
-  //   const el = $('startButton');
-  //   el.disabled = false;
-  //   el.innerHTML = 'Play';
+  preload(() => {
+    const el = $('startButton');
+    el.disabled = false;
+    el.innerHTML = 'Play';
 
-  //   player.unlock();
-  // });
+    player.unlock();
+  });
 }
 
 init();
@@ -173,8 +173,4 @@ init();
 setStation();
 
 // Temp
-$('loadingBox').classList.add('none');
-runningClock();
-// loop();
-
-// runningClock();
+// $('loadingBox').classList.add('none');
