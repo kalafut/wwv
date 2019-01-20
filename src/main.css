@@ -3,8 +3,11 @@ body {
 }
 
 a {
-	text-decoration: none;
-	color: #5599ff;
+	font-size: 16px;
+	color: black;
+}
+a:visited {
+	color: black;
 }
 
 td {
@@ -17,12 +20,6 @@ td {
 	min-height: 100vh;
 }
 
-.header {
-	display: flex;
-	justify-content: flex-end;
-}
-
-
 
 .data table {
 	background: #101b27;
@@ -34,6 +31,31 @@ td {
 .clock {
 	display: flex;
 	justify-content: center;
+}
+
+
+.station-about {
+	display: flex;
+}
+
+.station {
+	display: flex;
+	margin-left: 10px;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+#clock_block {
+	border-radius: 5px;
+	amargin-top: 25px;
+	apadding: 15px;
+
+	/*
+	background: #101b27;
+	color: #f3f3f3;
+	font-size: 16pt;
+	*/
+
 }
 
 .message {
@@ -76,37 +98,19 @@ button {
 	font-size: 16pt;
 }
 
-.center-div
-{
-     position: relative;
-     top: 50%;
-     transform: perspective(1px) translateY(-50%);
-}
-
 #clock {
 	color: #101b27;
-	font-size: 74pt;
+	font-size: 54pt;
 	margin: 0px;
 	width: 4em;
-	display: inline-block;
+	afont-family: 'Cousine', monospace;
+	font-family: 'Source Code Pro', monospace;
 }
 
-#_station {
-	position: absolute;
-	top: 0px;
-	right: 100px;
-	color: black;
-	font-size: 20px;
-}
-
-#_about {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	font-size: 20px;
-	text-decoration: none;
-	color: black;
-	padding: 5px;
+@media all and (min-width: 960px) {
+	#clock {
+		font-size: 70pt;
+	}
 }
 
 .wwv {
@@ -117,14 +121,22 @@ button {
 	background-image: url("images/wwvh7.jpg");
 }
 
+.footer {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 60px;
+}
+
 select {
-	width: 250px;
-	padding: 5px 35px 5px 5px;
+	padding: 5px 5px 5px 5px;
 	font-size: 16px;
 	border: 0px;
+	/*
+	width: 250px;
 	height: 34px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background-color: rgba(255,255,255, 0.2) ;
+	*/
+	background-color: rgba(255,255,255, 0.5) ;
 }

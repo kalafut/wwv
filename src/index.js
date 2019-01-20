@@ -1,5 +1,5 @@
 /* global document */
-import { Player, getClip, preload } from './player';
+import { Player, getClip } from './player';
 import getTime from './time';
 
 function $(id) {
@@ -18,7 +18,7 @@ function pluralize(s, amt) {
 }
 
 function getStation() {
-  return $('station').value;
+  return document.querySelector('input[name="station"]:checked').value;
 }
 
 let nextText = '';
@@ -146,7 +146,10 @@ function setStation() {
 // }
 // sayAll(0);
 
-$('station').addEventListener('change', setStation);
+document.querySelectorAll('input[name="station"]').forEach((el) => {
+  el.addEventListener('change', setStation);
+});
+
 $('startButton').addEventListener('click', () => {
   $('loadingBox').classList.add('none');
   $('header').classList.remove('hidden');
@@ -156,16 +159,22 @@ $('startButton').addEventListener('click', () => {
 
 function init() {
   $('loadingBox').classList.remove('none');
-  preload(() => {
-    const el = $('startButton');
-    el.disabled = false;
-    el.innerHTML = 'Play';
+  // preload(() => {
+  //   const el = $('startButton');
+  //   el.disabled = false;
+  //   el.innerHTML = 'Play';
 
-    player.unlock();
-  });
+  //   player.unlock();
+  // });
 }
 
 init();
 
 setStation();
+
+// Temp
+$('loadingBox').classList.add('none');
+runningClock();
+// loop();
+
 // runningClock();

@@ -12,20 +12,24 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="main.css?v=%CSS_HASH%">
+	<link href="https://fonts.googleapis.com/css?family=Cousine|Source+Code+Pro" rel="stylesheet">
   </head>
   <body id="body">
     <div class="main">
-      <div id="header" class="header hidden">
-        <select id="station">
-          <option selected value="v">WWV (Fort Collins, CO)</option>
-          <option value="h">WWVH (Kauai, HI)</option>
-        </select>
-        <a id="about" href="about.html">About</a>
-      </div>
-
       <div class="clock">
         <div id="clock_block">
-          <span id="clock" style="color:#101b27;"></span>
+            <span id="clock"></span>
+            <div class="station">
+              <label>
+                <input type="radio" name="station" value="v" checked>WWV<br>
+              </label>
+              <label>
+                <input type="radio" name="station" value="h">WWVH
+              </label>
+              <a id="about2" href="about.html" class="about">About</a>
+            </div>
+            <!--
+            -->
         </div>
       </div>
 
