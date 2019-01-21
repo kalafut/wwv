@@ -1,7 +1,12 @@
+[Back to RadioTime](/index.html)
+
 # What is this?
-This site attempts to emulate the audio portions of stations WWV and WWVH. This is _only_ an
+This site attempts to emulate the audio portions of stations WWV and WWVH. This is only an
 emulation, using your computer's time and samples of the audio. It is in no way a rebroadcast of the
 real stations.
+
+# What is WWV?
+
 
 # Why??
 While the number one reason has to be nostalia, I do genuinely like the _sound_ of WWV. I first
@@ -19,15 +24,6 @@ You can find samples of WWV lots of places, but this site tries to accurated mim
 and announcements the will be played and any time of the day. While I hope WWV doesn't get shut
 down, at least I feel I've done what I reasonable could to preserve the sound of it while it's still
 on the air.
-
-# It doesn't work on my phone/tablet
-It's true 😢. Javscript isn't my area of expertise to begin with, and this was the first time I've
-used any HTML5 audio APIs at all. I learned late in development that the APIs on mobile are a bit
-more restrictive, and the audio clip scheduling scheme that works well on desktop isn't
-mobile-friendly at all.
-
-It would be nice if it worked, but it's also quite a bit of work for white is probably a very tiny
-audience. If there is interest, I'll dig into fixing this.
 
 # Sample clips
 

@@ -1,5 +1,6 @@
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	background: white;
 }
 
 a {
@@ -100,7 +101,8 @@ button {
 	margin: 0px;
 	width: 4em;
 	afont-family: 'Cousine', monospace;
-	font-family: 'Source Code Pro', monospace;
+	afont-family: 'Source Code Pro', monospace;
+	font-family: monospace;
 }
 
 @media all and (min-width: 960px) {
