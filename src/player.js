@@ -1,5 +1,13 @@
 import { Howl } from 'howler';
-import getTime from './time';
+import { getTime } from './time';
+import spriteLayout from './sprite_layout';
+
+export const container = new Howl(spriteLayout);
+export const hIdent = new Howl({
+  src: 'clips/h_ident.mp3',
+});
+container.play('silence');
+
 
 const staticClips = [
   '_minute_pulse',
@@ -20,15 +28,53 @@ const staticClips = [
 const clips = {};
 
 // Load v and h versions of all static clips and numbers
-const needed = (staticClips.length * 2) + 8;
+const needed = 1; // (staticClips.length * 2) + 8;
 let loaded = 0;
 let onReady;
+// const pulses = new Howl({
+//   src: 'clips/v_pulse_gap.mp3',
+//   sprite: {
+//     pulse: [0, 4000],
+//   },
+//   // loop: true,
+// });
+
+// pulses.play('pulse');
+//
+export class Clip {
+  constructor(audio, sprite) {
+    this.audio = audio;
+    this.sprite = sprite;
+  }
+
+  duration() {
+    return this.audio.duration(this.sprite);
+  }
+
+  play() {
+    this.id = this.audio.play(this.sprite);
+    return this.id;
+  }
+
+  pause() {
+    this.audio.play(this.id);
+  }
+
+  seek(offset) {
+    return this.audio.seek(offset, this.sprite);
+  }
+
+  on(event, fn) {
+    console.log(`Listening for events for: ${this.id}`);
+    return this.audio.on(event, fn, this.id);
+  }
+}
+
 
 export function loadedAudio() {
   loaded += 1;
   if (loaded >= needed) {
     if (onReady !== null) {
-      console.log(onReady);
       onReady();
       onReady = null;
     }
@@ -36,10 +82,27 @@ export function loadedAudio() {
 }
 
 export function getClip(name) {
+  return new Clip(container, name);
+}
+
+export function getClipOld(name) {
+  let audio;
   if (clips[name] == null) {
-    const audio = new Howl({ src: `clips/${name}.mp3` });
-    audio.on('load', loadedAudio);
-    clips[name] = audio;
+    if (name.endsWith('zzz_main_0')) {
+      audio = new Howl({
+        src: `clips/${name}.mp3`,
+        sprite: {
+          all: [0, 60000],
+          v_after_ident: [0, 4000],
+        },
+      });
+      audio.on('load', loadedAudio);
+      clips[name] = audio;
+    } else {
+      audio = new Howl({ src: `clips/${name}.mp3` });
+      audio.on('load', loadedAudio);
+      clips[name] = new Clip(audio);
+    }
   }
 
   return clips[name];
@@ -48,6 +111,7 @@ export function getClip(name) {
 export function preload(readyFn) {
   if (typeof readyFn !== 'undefined') {
     onReady = readyFn;
+    readyFn();
   }
   staticClips.forEach((clip) => {
     getClip(`v${clip}`);
@@ -73,8 +137,8 @@ export function preload(readyFn) {
 
 export class Player {
   constructor() {
-    this.queue = {};
-    this.playing = {};
+    this.queue = new Set();
+    this.playing = new Set();
     this.locked = true;
   }
 
@@ -87,8 +151,8 @@ export class Player {
     Object.keys(this.playing).forEach((key) => {
       this.playing[key].pause();
     });
-    this.queue = {};
-    this.playing = {};
+    this.queue = new Set();
+    this.playing = new Set();
     this.locked = true;
   }
 
@@ -96,6 +160,7 @@ export class Player {
     this.locked = false;
   }
 
+  // Play a clip at a given time
   playAt(clip, time, offset, customId) {
     const now = getTime();
     const ms = 1000 * now.getUTCSeconds() + now.getUTCMilliseconds();
@@ -105,23 +170,26 @@ export class Player {
       diff += 60000;
     }
 
-    const queueId = (customId != null) ? customId : clip;
+    const queueId = customId || clip;
 
     const audio = getClip(clip);
     if (diff < 500) {
-      if (this.queue[queueId] == null) {
-        this.queue[queueId] = true;
+      if (!this.queue.has(queueId)) {
+        console.log(this.queue);
+        console.log(`Adding ${queueId}`);
+        this.queue.add(queueId);
+
         setTimeout(() => {
           if (!this.locked) {
-            if (offset != null) {
-              audio.seek(offset / 1000);
-            }
-            audio.on('end', () => {
-              delete this.queue[queueId];
-              delete this.playing[queueId];
-            });
-            this.playing[queueId] = audio;
+            audio.seek((offset || 0) / 1000);
             audio.play();
+            console.log(`playing ${queueId}`);
+            this.playing.add(audio);
+            audio.on('end', () => {
+              this.queue.delete(queueId);
+              this.playing.delete(queueId);
+              console.log(`Removing ${queueId}`);
+            });
           }
         }, diff);
       }

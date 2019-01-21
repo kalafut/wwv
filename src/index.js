@@ -1,10 +1,8 @@
 /* global document */
 import { Player, getClip, preload } from './player';
-import getTime from './time';
-
-function $(id) {
-  return document.getElementById(id);
-}
+import { getTime, runningClock } from './time';
+import { $, getStation } from './util';
+import schedule from './scheduler';
 
 const player = new Player();
 
@@ -17,27 +15,6 @@ function pluralize(s, amt) {
   return ret;
 }
 
-function getStation() {
-  return document.querySelector('input[name="station"]:checked').value;
-}
-
-let nextText = '';
-function runningClock() {
-  const now = getTime();
-
-  if (nextText === '') {
-    nextText = now.toISOString().substring(11, 19);
-  }
-
-  const clock = $('clock');
-  clock.innerHTML = nextText;
-
-  const delay = 1000 - now.getUTCMilliseconds();
-  now.setUTCSeconds(now.getUTCSeconds() + 1);
-  nextText = now.toISOString().substring(11, 19);
-  setTimeout(runningClock, delay);
-}
-
 function loop() {
   const now = getTime();
   let hours = now.getUTCHours();
@@ -46,6 +23,8 @@ function loop() {
   const ms = 1000 * now.getUTCSeconds() + now.getUTCMilliseconds();
   const station = getStation();
   let clip;
+  let tone;
+  // let ident = false;
 
   if (minutes === 59) {
     player.playAt('hour_pulse', 0);
@@ -56,23 +35,29 @@ function loop() {
   // pick correct tone file
   if ((minutes + 1) % 2 === (station === 'v' ? 0 : 1)) {
     clip = '_main_500';
+    tone = '500';
   } else {
     clip = '_main_600';
+    tone = '600';
   }
 
   if (((minutes === 0 || minutes === 30) && station === 'v')
         || ((minutes === 29 || minutes === 59) && station === 'h')) {
     clip = '_ident';
+    // ident = true;
   }
 
   if ((minutes === 1 && station === 'h') || (minutes === 2 && station === 'v')) {
     clip = '_main_440';
+    tone = '440';
   }
 
   if ((station === 'v' && (minutes === 29 || (minutes >= 43 && minutes <= 52) || minutes === 59))
     || (station === 'h' && (minutes === 0 || (minutes >= 8 && minutes <= 11) || (minutes >= 14 && minutes <= 19) || minutes === 30))
   ) {
+    // clip = '_main_0';
     clip = '';
+    tone = '0';
   }
 
   let clipDuration = 0;
@@ -89,9 +74,12 @@ function loop() {
   }
 
   // Pulses
-  if (secs > clipDuration - 1 && secs !== 58) {
-    player.playAt(`${station}_pulse`, ((secs + 1) * 1000) % 60000);
+
+  // if (secs > clipDuration - 1 && secs !== 58) {
+  if (secs !== 28 && secs !== 58 && secs > 90) {
+    player.playAt(`${station}_pulse_tone_${tone}`, ((secs + 1) * 1000) % 60000);
   }
+  // }
 
   // "at the tone"
   player.playAt(`${station}_at_the_tone2`, (station === 'h') ? 45500 : 52500);
@@ -110,13 +98,13 @@ function loop() {
 
   clip = player.playAt(`${station}_${hours}`, vtStart, 0, 'vt1');
 
-  vtStart += clip.duration() * 1000;
+  vtStart += clip.duration() + 100;
   clip = player.playAt(`${station}_${pluralize('hour', hours)}`, vtStart, 0, 'vt2');
 
-  vtStart += clip.duration() * 1000 + 100;
+  vtStart += clip.duration() + 500;
   clip = player.playAt(`${station}_${minutes}`, vtStart, 0, 'vt3');
 
-  vtStart += clip.duration() * 1000 + 100;
+  vtStart += clip.duration() + 200;
   clip = player.playAt(`${station}_${pluralize('minute', minutes)}`, vtStart, 0, 'vt4');
 
   // "coordinated universal time"
@@ -154,8 +142,11 @@ $('startButton').addEventListener('click', () => {
   $('loadingBox').classList.add('hidden');
   $('clock_block').classList.remove('hidden');
   runningClock();
-  loop();
+  if (false) {
+    loop();
+  }
 });
+
 
 function init() {
   $('loadingBox').classList.remove('none');
@@ -171,6 +162,6 @@ function init() {
 init();
 
 setStation();
-
+setTimeout(schedule, 1000);
 // Temp
 // $('loadingBox').classList.add('none');
