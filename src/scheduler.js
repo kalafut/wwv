@@ -1,9 +1,28 @@
 /* eslint prefer-destructuring: ["error", {AssignmentExpression: {array: false}}] */
 import { setDriftlessTimeout } from 'driftless';
 import { getTime } from './time';
-import { container, hIdent } from './player';
+import { container } from './player';
 import spriteLayout from './sprite_layout';
 import toneSchedule from './tone_schedule';
+import { sounds } from './clip';
+
+function pluralize(s, amt) {
+  let ret = (s);
+  if (amt !== 1) {
+    ret += 's';
+  }
+
+  return ret;
+}
+
+function play(station, clip, delays, time = 0) {
+  const delay = (delays[station] || delays.b) - time;
+  if (delay >= 0) {
+    setDriftlessTimeout(() => {
+      container.play(`${station}_${clip}`);
+    }, delay);
+  }
+}
 
 export default function schedule() {
   const now = getTime();
@@ -12,7 +31,7 @@ export default function schedule() {
   const slew = 1000 - now.getUTCMilliseconds();
   const minute = now.getUTCMinutes();
 
-  const station = 'h';
+  const station = 'v';
 
   const base = toneSchedule[minute][station === 'v' ? 0 : 1];
 
@@ -22,9 +41,10 @@ export default function schedule() {
     identDuration = spriteLayout.sprite[`${station}_ident`][1];
 
     if (ms - 1000 < identDuration) {
+      // TODO seek
       setDriftlessTimeout(() => {
-        hIdent.seek((ms - 1000) / 1000);
-        hIdent.play();
+        // hIdent.seek((ms - 1000) / 1000);
+        sounds.play(`${station}_ident`);
       }, Math.max(1000 - ms, 0));
     }
   }
@@ -47,19 +67,55 @@ export default function schedule() {
 
       if (i !== 28 && i !== 58) {
         setDriftlessTimeout(() => {
-          console.log(i);
-          container.play(clip);
+          sounds.play(clip);
         }, ((i - secs) * 1000) + slew);
       }
     }
   }
 
+  const p = (...args) => {
+    play(station, ...args);
+  };
+
   // minute pulse
   if (ms < 59000) {
-    setDriftlessTimeout(() => {
-      container.play('v_minute_pulse');
-    }, 60000 - ms);
+    p('minute_pulse', { b: 60000 }, ms);
   }
+
+
+  // "at the tone"
+  p('at_the_tone2', { h: 45500, v: 52500 }, ms);
+
+  // Voice announcement for next minute
+  let minutes = now.getUTCMinutes() + 1;
+  let hours = now.getUTCHours();
+  if (minutes > 59) {
+    minutes = 0;
+    hours += 1;
+  }
+  if (hours > 23) {
+    hours = 0;
+  }
+
+  let vtStart = (station === 'h') ? 46500 : 53500;
+
+  p(`${hours}`, { b: vtStart }, ms);
+  vtStart += 1300;
+
+  // vtStart += clip.duration() + 100;
+  p(`${pluralize('hour', hours)}`, { b: vtStart }, ms);
+  vtStart += 1300;
+
+  // vtStart += clip.duration() + 500;
+  p(`${minutes}`, { b: vtStart }, ms);
+  vtStart += 1300;
+
+  // vtStart += clip.duration() + 200;
+  p(`${pluralize('minute', minutes)}`, { b: vtStart }, ms);
+  vtStart += 1300;
+
+  // "coordinated universal time"
+  p('utc2', { h: 49750, v: 56750 }, ms);
 
   setDriftlessTimeout(schedule, 60000 - ms);
 }

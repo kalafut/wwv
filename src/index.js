@@ -1,10 +1,9 @@
 /* global document */
-import { Player, getClip, preload } from './player';
+import { Player, getClip } from './player';
 import { getTime, runningClock } from './time';
 import { $, getStation } from './util';
 import schedule from './scheduler';
-
-const player = new Player();
+import { onReady } from './clip';
 
 function pluralize(s, amt) {
   let ret = (s);
@@ -14,6 +13,8 @@ function pluralize(s, amt) {
 
   return ret;
 }
+
+const player = new Player();
 
 function loop() {
   const now = getTime();
@@ -145,12 +146,14 @@ $('startButton').addEventListener('click', () => {
   if (false) {
     loop();
   }
+  schedule();
 });
 
 
 function init() {
   $('loadingBox').classList.remove('none');
-  preload(() => {
+
+  onReady(() => {
     const el = $('startButton');
     el.disabled = false;
     el.innerHTML = 'Play';
@@ -162,6 +165,5 @@ function init() {
 init();
 
 setStation();
-setTimeout(schedule, 1000);
 // Temp
 // $('loadingBox').classList.add('none');
