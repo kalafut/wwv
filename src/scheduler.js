@@ -77,11 +77,12 @@ export default function schedule() {
     play(station, ...args);
   };
 
+  const d = clip => sounds.duration(`${station}_${clip}`);
+
   // minute pulse
   if (ms < 59000) {
     p('minute_pulse', { b: 60000 }, ms);
   }
-
 
   // "at the tone"
   p('at_the_tone2', { h: 45500, v: 52500 }, ms);
@@ -99,20 +100,21 @@ export default function schedule() {
 
   let vtStart = (station === 'h') ? 46500 : 53500;
 
-  p(`${hours}`, { b: vtStart }, ms);
-  vtStart += 1300;
+  let clip = `${hours}`;
+  p(clip, { b: vtStart }, ms);
+  vtStart += d(clip) + 100;
 
-  // vtStart += clip.duration() + 100;
-  p(`${pluralize('hour', hours)}`, { b: vtStart }, ms);
-  vtStart += 1300;
+  clip = pluralize('hour', hours);
+  p(clip, { b: vtStart }, ms);
+  vtStart += d(clip) + 500;
 
-  // vtStart += clip.duration() + 500;
-  p(`${minutes}`, { b: vtStart }, ms);
-  vtStart += 1300;
+  clip = `${minutes}`;
+  p(clip, { b: vtStart }, ms);
+  vtStart += d(clip) + 200;
 
   // vtStart += clip.duration() + 200;
-  p(`${pluralize('minute', minutes)}`, { b: vtStart }, ms);
-  vtStart += 1300;
+  clip = pluralize('minute', minutes);
+  p(clip, { b: vtStart }, ms);
 
   // "coordinated universal time"
   p('utc2', { h: 49750, v: 56750 }, ms);

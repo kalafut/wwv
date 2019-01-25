@@ -27,27 +27,33 @@ spriteLayout.onload = () => {
 };
 container = new Howl(spriteLayout);
 
-const hIdent = new Howl({
-  src: 'clips/h_ident.mp3',
-  onload: load,
-});
-
-const vIdent = new Howl({
-  src: 'clips/v_ident.mp3',
-  onload: load,
-});
+const idents = {
+  h_ident: new Howl({
+    src: 'clips/h_ident.mp3',
+    onload: load,
+  }),
+  v_ident: new Howl({
+    src: 'clips/v_ident.mp3',
+    onload: load,
+  }),
+};
 
 export const sounds = {
   play(clip) {
     switch (clip) {
-      case 'h_ident':
-        hIdent.play();
-        break;
-      case 'v_ident':
-        vIdent.play();
+      case 'h_ident' || 'v_ident':
+        idents[clip].play();
         break;
       default:
         container.play(clip);
+    }
+  },
+  duration(clip) {
+    switch (clip) {
+      case 'h_ident' || 'v_ident':
+        return idents[clip].duration() * 1000;
+      default:
+        return spriteLayout.sprite[clip][1];
     }
   },
 };
