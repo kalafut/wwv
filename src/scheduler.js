@@ -31,19 +31,22 @@ export default function schedule() {
   const slew = 1000 - now.getUTCMilliseconds();
   const minute = now.getUTCMinutes();
 
-  const station = 'v';
+  const station = 'h';
 
   const base = toneSchedule[minute][station === 'v' ? 0 : 1];
+
+  const d = clip => sounds.duration(`${station}_${clip}`);
 
   // ident message
   let identDuration = 0;
   if (base === 'ident') {
-    identDuration = spriteLayout.sprite[`${station}_ident`][1];
+    identDuration = d('ident');
 
     if (ms - 1000 < identDuration) {
       // TODO seek
       setDriftlessTimeout(() => {
         // hIdent.seek((ms - 1000) / 1000);
+        sounds.seek(`${station}_ident`, ms - 1000);
         sounds.play(`${station}_ident`);
       }, Math.max(1000 - ms, 0));
     }
@@ -77,7 +80,6 @@ export default function schedule() {
     play(station, ...args);
   };
 
-  const d = clip => sounds.duration(`${station}_${clip}`);
 
   // minute pulse
   if (ms < 59000) {

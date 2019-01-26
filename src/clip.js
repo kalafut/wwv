@@ -41,19 +41,23 @@ const idents = {
 export const sounds = {
   play(clip) {
     switch (clip) {
-      case 'h_ident' || 'v_ident':
-        idents[clip].play();
-        break;
+      case 'h_ident':
+      case 'v_ident':
+        return idents[clip].play();
       default:
-        container.play(clip);
+        return container.play(clip);
     }
   },
   duration(clip) {
     switch (clip) {
-      case 'h_ident' || 'v_ident':
+      case 'h_ident':
+      case 'v_ident':
         return idents[clip].duration() * 1000;
       default:
         return spriteLayout.sprite[clip][1];
     }
+  },
+  seek(clip, amount) {
+    idents[clip].seek(amount / 1000);
   },
 };
