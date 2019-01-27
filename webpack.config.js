@@ -1,5 +1,4 @@
 const path = require('path');
-const MarkdownPlugin = require('markdown-html-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
@@ -9,11 +8,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new MarkdownPlugin({
-      filePath: '../src',
-      exportPath: '../dist/',
-      // template: 'template.html'
-    }),
     new WebpackShellPlugin({
       onBuildEnd: ['./finalize.sh'],
     }),
