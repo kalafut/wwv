@@ -4,12 +4,16 @@ import { getTime } from './time';
 import { container } from './player';
 import toneSchedule from './tone_schedule';
 import { sounds } from './audio';
+import { getStation } from './util';
 
-let stopped = false;
 const timerHandles = new Set();
 
 function setTimeout(fn, delay) {
-  timerHandles.add(setDriftlessTimeout(fn, delay));
+  const id = setDriftlessTimeout(() => {
+    fn();
+    timerHandles.delete(id);
+  }, delay);
+  timerHandles.add(id);
 }
 
 function pluralize(s, amt) {
@@ -31,7 +35,6 @@ function play(station, clip, delays, time = 0) {
 }
 
 export function stop() {
-  stopped = true;
   timerHandles.forEach((id) => {
     clearDriftless(id);
   });
@@ -45,7 +48,7 @@ export function schedule() {
   const slew = 1000 - now.getUTCMilliseconds();
   const minute = now.getUTCMinutes();
 
-  const station = 'h';
+  const station = getStation();
 
   const base = toneSchedule[minute][station === 'v' ? 0 : 1];
 
@@ -128,14 +131,10 @@ export function schedule() {
   p(clip, { b: vtStart }, ms);
   vtStart += d(clip) + 200;
 
-  // vtStart += clip.duration() + 200;
   clip = pluralize('minute', minutes);
   p(clip, { b: vtStart }, ms);
 
-  // "coordinated universal time"
   p('utc2', { h: 49750, v: 56750 }, ms);
 
-  if (!stopped) {
-    setTimeout(schedule, 60000 - ms);
-  }
+  setTimeout(schedule, 60000 - ms);
 }

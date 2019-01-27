@@ -113,17 +113,16 @@ function loop() {
   setTimeout(loop, 200);
 }
 
-function setStation() {
+function setBackground() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
   $('body').className = `background ${stationClass}`;
+}
 
+function setStation() {
+  setBackground();
   sounds.stop();
   stop();
-
-  /*
-  player.lock();
-  player.unlock();
-  */
+  schedule();
 }
 
 // Utility to play all number clips for easy comparison
@@ -166,8 +165,5 @@ function init() {
   });
 }
 
+setBackground();
 init();
-
-setStation();
-// Temp
-// $('loadingBox').classList.add('none');
