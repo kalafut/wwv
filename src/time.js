@@ -1,3 +1,4 @@
+import { setDriftlessTimeout } from 'driftless';
 import { $ } from './util';
 
 let startTime = null;
@@ -39,5 +40,5 @@ export function runningClock() {
   const delay = 1000 - now.getUTCMilliseconds();
   now.setUTCSeconds(now.getUTCSeconds() + 1);
   nextText = now.toISOString().substring(11, 19);
-  setTimeout(runningClock, delay);
+  setDriftlessTimeout(runningClock, delay);
 }

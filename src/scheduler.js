@@ -58,7 +58,6 @@ export function schedule() {
     if (ms - 1000 < identDuration) {
       // TODO seek
       setTimeout(() => {
-        // hIdent.seek((ms - 1000) / 1000);
         sounds.seek(`${station}_ident`, ms - 1000);
         sounds.play(`${station}_ident`);
       }, Math.max(1000 - ms, 0));

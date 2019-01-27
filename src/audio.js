@@ -22,6 +22,8 @@ export function onReady(fn) {
 
 
 spriteLayout.onload = () => {
+  // 'silence' is a looping sprite that will run continuously to keep
+  // other audio actions responsive.
   container.play('silence');
   load();
 };
