@@ -139,3 +139,22 @@ export function schedule() {
 
   setTimeout(schedule, 60000 - ms);
 }
+
+// export function reschedule() {
+//   stop();
+//   schedule();
+// }
+//
+// let lastTime;
+// function jumpDetector() {
+//   const now = Date.now();
+//   if (lastTime && (now - lastTime) > 2000) {
+//     console.log('rescheduling');
+//     reschedule();
+//   }
+//   lastTime = now;
+// }
+//
+// export function startJumpDetector() {
+//   setInterval(jumpDetector, 1000);
+// }

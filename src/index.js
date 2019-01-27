@@ -38,6 +38,7 @@ $('startButton').addEventListener('click', () => {
   $('clock_block').classList.remove('hidden');
   runningClock();
   schedule();
+  // startJumpDetector();
 });
 
 
