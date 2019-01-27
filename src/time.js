@@ -7,7 +7,6 @@ let startMs = null;
 const override = true;
 
 if (override) {
-  // startTime = '1995-12-17T05:52:25Z';
   startTime = '1995-12-17T07:18:40Z';
 }
 

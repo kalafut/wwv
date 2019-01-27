@@ -29,7 +29,13 @@ function play(station, clip, delays, time = 0) {
   const delay = (delays[station] || delays.b) - time;
   if (delay >= 0) {
     setTimeout(() => {
-      container.play(`${station}_${clip}`);
+      let prefix = `${station}_`;
+
+      if (station === '') {
+        prefix = '';
+      }
+
+      container.play(`${prefix}${clip}`);
     }, delay);
   }
 }
@@ -98,9 +104,13 @@ export function schedule() {
   };
 
 
-  // minute pulse
+  // minute or hour pulse
   if (ms < 59000) {
-    p('minute_pulse', { b: 60000 }, ms);
+    if (minute === 59) {
+      play('', 'hour_pulse', { b: 60000 }, ms);
+    } else {
+      p('minute_pulse', { b: 60000 }, ms);
+    }
   }
 
   // "at the tone"
