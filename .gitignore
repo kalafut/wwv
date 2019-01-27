@@ -1,3 +1,4 @@
 node_modules/*
 wwv_tones/wwv_tones
 dist/*
+tmp/*

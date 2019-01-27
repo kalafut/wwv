@@ -104,7 +104,7 @@ export function schedule() {
   }
 
   // "at the tone"
-  p('at_the_tone2', { h: 45500, v: 52500 }, ms);
+  p('at_the_tone', { h: 45500, v: 52500 }, ms);
 
   // Voice announcement for next minute
   let minutes = now.getUTCMinutes() + 1;
@@ -125,16 +125,17 @@ export function schedule() {
 
   clip = pluralize('hour', hours);
   p(clip, { b: vtStart }, ms);
-  vtStart += d(clip) + 500;
+  vtStart += d(clip) + 400;
 
   clip = `${minutes}`;
   p(clip, { b: vtStart }, ms);
-  vtStart += d(clip) + 200;
+  vtStart += d(clip) + 100;
 
   clip = pluralize('minute', minutes);
   p(clip, { b: vtStart }, ms);
 
-  p('utc2', { h: 49750, v: 56750 }, ms);
+  vtStart += d(clip) + 400;
+  p('utc', { b: vtStart }, ms);
 
   setTimeout(schedule, 60000 - ms);
 }

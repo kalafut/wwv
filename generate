@@ -2,25 +2,31 @@
 
 set -e
 
-cd wwv_tones
+rm -rf tmp
+mkdir tmp
 
 echo "Generating tone files"
+cd wwv_tones
 go run main.go
 
-#echo "Converting to MP3s"
-#for f in *.wav ; do lame --preset 64 $f ; done
-#rm *.wav
+echo "Moving to work directory"
+mv *.wav ../tmp
 
-echo "Moving to clips directory"
-#mv *.mp3 ../clips
-mv *.wav ../clips
+cd ../tmp
+cp ../voice_clips/* .
 
-cd ../clips
+rm h_ident.mp3
+rm v_ident.mp3
 
 echo "Building sprite"
-rm output.mp3
 audiosprite -f howler2 -e mp3 -b 64 -s 5.02 -u clips *.wav *.mp3
 cd ..
+
+echo "Moving files to clips"
+rm -rf clips
+mkdir clips
+mv tmp/output.mp3 clips
+cp voice_clips/*_ident* clips
 
 echo "Generating sprite layout file"
 cat > src/sprite_layout.js <<EOF
@@ -28,5 +34,5 @@ cat > src/sprite_layout.js <<EOF
 export default
 EOF
 
-cat >> src/sprite_layout.js clips/output.json
+cat >> src/sprite_layout.js tmp/output.json
 

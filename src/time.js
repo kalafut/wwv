@@ -4,11 +4,11 @@ let startTime = null;
 let startMs = null;
 
 // override current time for debugging
-const override = false;
+const override = true;
 
 if (override) {
   // startTime = '1995-12-17T05:52:25Z';
-  startTime = '1995-12-17T05:00:50Z';
+  startTime = '1995-12-17T07:18:40Z';
 }
 
 
