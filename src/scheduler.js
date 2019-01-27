@@ -1,10 +1,9 @@
 /* eslint prefer-destructuring: ["error", {AssignmentExpression: {array: false}}] */
 import { clearDriftless, setDriftlessTimeout } from 'driftless';
 import { getTime } from './time';
-import { container } from './player';
 import toneSchedule from './tone_schedule';
 import { sounds } from './audio';
-import { getStation } from './util';
+import { getStation, pluralize } from './util';
 
 const timerHandles = new Set();
 
@@ -14,15 +13,6 @@ function setTimeout(fn, delay) {
     timerHandles.delete(id);
   }, delay);
   timerHandles.add(id);
-}
-
-function pluralize(s, amt) {
-  let ret = (s);
-  if (amt !== 1) {
-    ret += 's';
-  }
-
-  return ret;
 }
 
 function play(station, clip, delays, time = 0) {
@@ -35,7 +25,7 @@ function play(station, clip, delays, time = 0) {
         prefix = '';
       }
 
-      container.play(`${prefix}${clip}`);
+      sounds.play(`${prefix}${clip}`);
     }, delay);
   }
 }
