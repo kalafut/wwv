@@ -2,16 +2,15 @@
 import { Player, getClip } from './player';
 import { getTime, runningClock } from './time';
 import { $, getStation } from './util';
-import schedule from './scheduler';
-import { onReady } from './clip';
+import { stop, schedule } from './scheduler';
+import { onReady, sounds } from './audio';
 
 function pluralize(s, amt) {
-  let ret = (s);
   if (amt !== 1) {
-    ret += 's';
+    return `${s}s`;
   }
 
-  return ret;
+  return s;
 }
 
 const player = new Player();
@@ -118,8 +117,13 @@ function setStation() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
   $('body').className = `background ${stationClass}`;
 
+  sounds.stop();
+  stop();
+
+  /*
   player.lock();
   player.unlock();
+  */
 }
 
 // Utility to play all number clips for easy comparison

@@ -60,4 +60,8 @@ export const sounds = {
   seek(clip, amount) {
     idents[clip].seek(amount / 1000);
   },
+  stop() {
+    idents.h_ident.stop();
+    idents.v_ident.stop();
+  },
 };

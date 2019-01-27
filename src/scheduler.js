@@ -1,10 +1,16 @@
 /* eslint prefer-destructuring: ["error", {AssignmentExpression: {array: false}}] */
-import { setDriftlessTimeout } from 'driftless';
+import { clearDriftless, setDriftlessTimeout } from 'driftless';
 import { getTime } from './time';
 import { container } from './player';
-import spriteLayout from './sprite_layout';
 import toneSchedule from './tone_schedule';
-import { sounds } from './clip';
+import { sounds } from './audio';
+
+let stopped = false;
+const timerHandles = new Set();
+
+function setTimeout(fn, delay) {
+  timerHandles.add(setDriftlessTimeout(fn, delay));
+}
 
 function pluralize(s, amt) {
   let ret = (s);
@@ -18,13 +24,21 @@ function pluralize(s, amt) {
 function play(station, clip, delays, time = 0) {
   const delay = (delays[station] || delays.b) - time;
   if (delay >= 0) {
-    setDriftlessTimeout(() => {
+    setTimeout(() => {
       container.play(`${station}_${clip}`);
     }, delay);
   }
 }
 
-export default function schedule() {
+export function stop() {
+  stopped = true;
+  timerHandles.forEach((id) => {
+    clearDriftless(id);
+  });
+  timerHandles.clear();
+}
+
+export function schedule() {
   const now = getTime();
   const secs = now.getUTCSeconds();
   const ms = 1000 * now.getUTCSeconds() + now.getUTCMilliseconds();
@@ -44,7 +58,7 @@ export default function schedule() {
 
     if (ms - 1000 < identDuration) {
       // TODO seek
-      setDriftlessTimeout(() => {
+      setTimeout(() => {
         // hIdent.seek((ms - 1000) / 1000);
         sounds.seek(`${station}_ident`, ms - 1000);
         sounds.play(`${station}_ident`);
@@ -69,7 +83,7 @@ export default function schedule() {
       }
 
       if (i !== 28 && i !== 58) {
-        setDriftlessTimeout(() => {
+        setTimeout(() => {
           sounds.play(clip);
         }, ((i - secs) * 1000) + slew);
       }
@@ -121,5 +135,7 @@ export default function schedule() {
   // "coordinated universal time"
   p('utc2', { h: 49750, v: 56750 }, ms);
 
-  setDriftlessTimeout(schedule, 60000 - ms);
+  if (!stopped) {
+    setTimeout(schedule, 60000 - ms);
+  }
 }
