@@ -46,6 +46,16 @@ td {
 	justify-content: space-evenly;
 }
 
+.mute {
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+}
+
+#audio {
+}
+
+
 #clock_block {
 	border-radius: 5px;
 	amargin-top: 25px;

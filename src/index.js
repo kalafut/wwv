@@ -1,4 +1,4 @@
-/* global document */
+/* global document, window */
 import Cookies from 'js-cookie';
 import { runningClock } from './time';
 import { $, getStation } from './util';
@@ -59,6 +59,21 @@ function init() {
     }
   });
 }
+
+let muted = true;
+function audioToggle() {
+  muted = !muted;
+  const el = $('audio');
+  el.src = muted ? 'images/muted.svg?v=1' : 'images/unmuted.svg?v=1';
+
+  if (muted) {
+    stop();
+  } else {
+    schedule();
+  }
+}
+
+window.audioToggle = audioToggle;
 
 setBackground();
 init();
