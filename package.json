@@ -34,6 +34,7 @@
   "dependencies": {
     "driftless": "^2.0.3",
     "howler": "^2.1.1",
+    "js-cookie": "^2.2.0",
     "present": "^1.0.0"
   }
 }

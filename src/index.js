@@ -1,4 +1,5 @@
 /* global document */
+import Cookies from 'js-cookie';
 import { runningClock } from './time';
 import { $, getStation } from './util';
 import { stop, schedule } from './scheduler';
@@ -33,14 +34,18 @@ document.querySelectorAll('input[name="station"]').forEach((el) => {
   el.addEventListener('change', setStation);
 });
 
-$('startButton').addEventListener('click', () => {
+function go() {
   $('loadingBox').classList.add('hidden');
   $('clock_block').classList.remove('hidden');
   runningClock();
   schedule();
   // startJumpDetector();
-});
+}
 
+$('startButton').addEventListener('click', () => {
+  Cookies.set('intro_shown', 'y');
+  go();
+});
 
 function init() {
   $('loadingBox').classList.remove('none');
@@ -49,6 +54,9 @@ function init() {
     const el = $('startButton');
     el.disabled = false;
     el.innerHTML = 'Play';
+    if (Cookies.get('intro_shown') === 'y') {
+      go();
+    }
   });
 }
 
