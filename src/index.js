@@ -14,9 +14,11 @@ function setBackground() {
 
 function setStation() {
   setBackground();
-  sounds.stop();
-  stop();
-  schedule();
+  if (!muted) {
+    sounds.stop();
+    stop();
+    schedule();
+  }
 }
 
 document.querySelectorAll('input[name="station"]').forEach((el) => {

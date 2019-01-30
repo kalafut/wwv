@@ -34,6 +34,9 @@ td {
 	justify-content: center;
 }
 
+.about {
+	font-weight: bold;
+}
 
 .station-about {
 	display: flex;
@@ -49,7 +52,7 @@ td {
 .mute {
 	display: flex;
 	justify-content: center;
-	margin-top: 25px;
+	margin-top: 35px;
 }
 
 #audio {
