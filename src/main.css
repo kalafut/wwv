@@ -3,10 +3,14 @@ body {
 	background: white;
 }
 
-a.main {
+.about {
+	font-weight: bold;
+}
+
+a.about {
 	color: black;
 }
-a.main:visited {
+a.about:visited {
 	color: black;
 }
 
@@ -33,9 +37,6 @@ td {
 	justify-content: center;
 }
 
-.about {
-	font-weight: bold;
-}
 
 .station-about {
 	display: flex;
