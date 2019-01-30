@@ -3,11 +3,10 @@ body {
 	background: white;
 }
 
-a {
-	font-size: 16px;
+a.main {
 	color: black;
 }
-a:visited {
+a.main:visited {
 	color: black;
 }
 
@@ -61,15 +60,6 @@ td {
 
 #clock_block {
 	border-radius: 5px;
-	amargin-top: 25px;
-	apadding: 15px;
-
-	/*
-	background: #101b27;
-	color: #f3f3f3;
-	font-size: 16pt;
-	*/
-
 }
 
 .message {
@@ -101,8 +91,8 @@ button {
 	background-repeat: no-repeat;
 }
 
-.alert-box {
-	width: 40%;
+.intro-box {
+	width: 50%;
 	border-radius: 5px;
 	margin-top: 25px;
 	padding: 15px;
@@ -122,9 +112,12 @@ button {
 	font-family: monospace;
 }
 
-@media all and (min-width: 960px) {
+@media all and (min-width: 768px) {
 	#clock {
 		font-size: 70pt;
+	}
+	.intro-box {
+		width: 30%;
 	}
 }
 
