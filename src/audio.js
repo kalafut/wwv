@@ -3,7 +3,7 @@ import spriteLayout from './sprite_layout';
 
 let clipsLoaded = 0;
 let container;
-let readyFn;
+let readyFn = () => {};
 
 function load() {
   clipsLoaded += 1;

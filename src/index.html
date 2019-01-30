@@ -29,7 +29,8 @@
               <a id="about2" href="about.html" class="about">About</a>
             </div>
             <div class="mute">
-              <img id="audio" src="images/unmuted.svg" onclick="audioToggle()" height="30px" width="30px"/>
+              <span id="loadingMessage" class="none">Loading audio...</span>
+              <img id="audio" src="images/muted.svg" onclick="audioToggle()" height="30px" width="30px"/>
             </div>
             <!--
             -->
@@ -37,7 +38,7 @@
       </div>
 
       <div class="message">
-        <div id="loadingBox" class="alert-box none">
+        <div id="loadingBox" class="alert-box hidden">
           Welcome! This site will simulate the audio broadcast by WWV and WWVH
           using your current computer time.
           <br>

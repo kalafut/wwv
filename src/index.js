@@ -5,6 +5,8 @@ import { $, getStation } from './util';
 import { stop, schedule } from './scheduler';
 import { onReady, sounds } from './audio';
 
+let muted = true;
+
 function setBackground() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
   $('body').className = `background ${stationClass}`;
@@ -17,52 +19,25 @@ function setStation() {
   schedule();
 }
 
-// Utility to play all number clips for easy comparison
-//
-// function sayAll(i) {
-//  const audio = getClip(`v_${i}`);
-//  audio.onended = () => {
-//    if (i < 60) {
-//      sayAll(i + 1);
-//    }
-//  };
-//  audio.play();
-// }
-// sayAll(0);
-
 document.querySelectorAll('input[name="station"]').forEach((el) => {
   el.addEventListener('change', setStation);
 });
 
-function go() {
-  $('loadingBox').classList.add('hidden');
-  $('clock_block').classList.remove('hidden');
-  runningClock();
-  schedule();
-  // startJumpDetector();
-}
+function audioToggle(muteState = null) {
+  if (muteState === 'loading') {
+    $('audio').classList.add('none');
+    $('loadingMessage').classList.remove('none');
+    return;
+  }
 
-$('startButton').addEventListener('click', () => {
-  Cookies.set('intro_shown', 'y');
-  go();
-});
+  $('audio').classList.remove('none');
+  $('loadingMessage').classList.add('none');
 
-function init() {
-  $('loadingBox').classList.remove('none');
-
-  onReady(() => {
-    const el = $('startButton');
-    el.disabled = false;
-    el.innerHTML = 'Play';
-    if (Cookies.get('intro_shown') === 'y') {
-      go();
-    }
-  });
-}
-
-let muted = true;
-function audioToggle() {
-  muted = !muted;
+  if (muteState !== null) {
+    muted = muteState;
+  } else {
+    muted = !muted;
+  }
   const el = $('audio');
   el.src = muted ? 'images/muted.svg?v=1' : 'images/unmuted.svg?v=1';
 
@@ -71,6 +46,41 @@ function audioToggle() {
   } else {
     schedule();
   }
+}
+
+function startClock() {
+  $('clock_block').classList.remove('hidden');
+  runningClock();
+}
+
+function go() {
+  $('loadingBox').classList.add('hidden');
+  startClock();
+  audioToggle(false);
+  // startJumpDetector();
+}
+
+function init() {
+  audioToggle('loading');
+  if (Cookies.get('intro_shown') === 'y') {
+    startClock();
+    onReady(() => {
+      audioToggle(true);
+    });
+    return;
+  }
+
+  $('loadingBox').classList.remove('hidden');
+  $('startButton').addEventListener('click', () => {
+    Cookies.set('intro_shown', 'y');
+    go();
+  });
+
+  onReady(() => {
+    const el = $('startButton');
+    el.disabled = false;
+    el.innerHTML = 'Play';
+  });
 }
 
 window.audioToggle = audioToggle;
