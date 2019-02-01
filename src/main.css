@@ -1,15 +1,22 @@
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	/* font-family: 'Roboto', sans-serif;*/
 	background: white;
+	hyphens: auto;
 }
 
 .about {
 	font-weight: bold;
 }
 
+a {
+	color: #ff0000;
+}
+
 a.about {
 	color: black;
 }
+
 a.about:visited {
 	color: black;
 }
@@ -35,8 +42,23 @@ td {
 .clock {
 	display: flex;
 	justify-content: center;
+	margin-bottom: 15px;
 }
 
+.heading {
+	acolor: #ff0000;
+	afont-family: 'Roboto';
+	font-size: 22pt;
+	margin-top: 20px;
+}
+
+hr.divider {
+	width: 70%;
+	border-style: solid;
+	border-color: #dddddd;
+
+	border-width: 1px;
+}
 
 .station-about {
 	display: flex;
@@ -44,15 +66,31 @@ td {
 
 .station {
 	display: flex;
-	margin-left: 10px;
 	flex-direction: row;
-	justify-content: space-evenly;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.station-info {
+	margin-top: 15px;
+	width: 100%;
+}
+
+.station-select {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 20px;
+}
+
+.station-option {
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .mute {
 	display: flex;
-	justify-content: center;
-	margin-top: 35px;
+	margin-right: 55px;
 }
 
 #audio {
@@ -109,8 +147,8 @@ button {
 	margin: 0px;
 	width: 4em;
 	afont-family: 'Cousine', monospace;
-	afont-family: 'Source Code Pro', monospace;
 	font-family: monospace;
+	afont-family: 'Roboto Mono', monospace;
 }
 
 @media all and (min-width: 768px) {
@@ -122,12 +160,18 @@ button {
 	}
 }
 
+.selected {
+	border: solid;
+	border-width: 1px;
+	border-radius: 2px;
+	border-color: #ff0000;
+	padding: 1px;
+}
+
 .wwv {
-	background-image: url("images/wwv_02.jpg");
 }
 
 .wwvh {
-	background-image: url("images/wwvh7.jpg");
 }
 
 .footer {

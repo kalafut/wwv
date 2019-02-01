@@ -10,6 +10,13 @@ let muted = true;
 function setBackground() {
   const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
   $('body').className = `background ${stationClass}`;
+  if (getStation() === 'v') {
+    $('wwv-info').classList.remove('none');
+    $('wwvh-info').classList.add('none');
+  } else {
+    $('wwvh-info').classList.remove('none');
+    $('wwv-info').classList.add('none');
+  }
 }
 
 function setStation() {
