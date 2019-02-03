@@ -1,8 +1,7 @@
 /* global document */
-import Cookies from 'js-cookie';
 import { runningClock } from './time';
 import {
-  $, getStation, hide, show,
+  $, getStation, hide, shouldShowPlayMsg, show,
 } from './util';
 import { stop, schedule } from './scheduler';
 import { onReady, sounds } from './audio';
@@ -66,33 +65,13 @@ function startClock() {
   runningClock();
 }
 
-function go() {
-  $('loadingBox').classList.add('hidden');
-  startClock();
-  audioToggle(false);
-  // startJumpDetector();
-}
-
 function init() {
   audioToggle('loading');
-  if (Cookies.get('intro_shown') === 'y') {
-    startClock();
-    onReady(() => {
-      audioToggle(true);
-    });
-    return;
-  }
-
-  $('loadingBox').classList.remove('hidden');
-  $('startButton').addEventListener('click', () => {
-    Cookies.set('intro_shown', 'y');
-    go();
-  });
+  showPlayIntro = shouldShowPlayMsg();
+  startClock();
 
   onReady(() => {
-    const el = $('startButton');
-    el.disabled = false;
-    el.innerHTML = 'Play';
+    audioToggle(true);
   });
 }
 

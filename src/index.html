@@ -20,124 +20,110 @@
     <div class="main">
       <div class="clock">
         <div id="clock_block" class="hidden">
-            <span id="clock"></span>
-            <div class="station">
-              <div class="station-select">
-                <label class="station-option">
-                  <input type="radio" name="station" value="v" checked>WWV<br>
-                </label>
-                <label class="station-option">
-                  <input type="radio" name="station" value="h">WWVH
-                </label>
-              </div>
-              <div class="mute">
-                <span id="loadingMessage" class="none">Loading audio...</span>
-                <!--
-                <i id="play" class="icon-play audio-control"></i>
-                <i id="pause" class="icon-pause audio-control none"></i>
-                -->
+          <span id="clock"></span>
+          <div class="station">
+            <div class="station-select">
+              <label class="station-option">
+                <input type="radio" name="station" value="v" checked>WWV<br>
+              </label>
+              <label class="station-option">
+                <input type="radio" name="station" value="h">WWVH
+              </label>
+            </div>
+            <div class="mute">
+              <span id="loadingMessage" class="none">Loading audio...</span>
+              <i id="play" class="icon-play audio-control"></i>
+              <i id="pause" class="icon-pause audio-control none"></i>
+              <!--
                 <i id="play" class="icon-volume-off audio-control"></i>
                 <i id="pause" class="icon-volume-up audio-control none"></i>
-              </div>
+              -->
             </div>
-            <div class="row center">
-              <div id="statusMessage">
-                Press play to start audio
-              </div>
+          </div>
+          <div class="row center">
+            <div id="statusMessage">
+              Press play to start audio
             </div>
+          </div>
         </div>
       </div>
       <div id="wwv-info">
-      <hr class="divider">
-      <table class="station-info">
-        <tr>
-          <td><strong>Station:</strong></td><td>WWV</td>
-        </tr>
-        <tr>
-          <td><strong>Established:</strong></td><td>1919</td>
-        </tr>
-        <tr>
-          <td><strong>Location:</strong></td><td><a href="https://www.google.com/maps/place/NIST+Radio+Station+WWV/@40.6797227,-105.0415411,367m/data=!3m1!1e3!4m7!3m6!1s0x876934b040547107:0x987903210de784fb!8m2!3d40.6796942!4d-105.042429!9m1!1b1">Fort Collins, CO</a></td>
-        </tr>
-        <tr>
-          <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15, 20, 25 MHz</td>
-        </tr>
-        <tr>
-          <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
-        </tr>
-        <tr>
-          <td><strong>Identification:</strong></td><td>0, 30 minutes (<a href="#">play</a>)</td>
-        </tr>
-        <tr>
-          <td><strong>Pulse Frequency:</strong></td><td>1000Hz</td>
-        </tr>
-      </table>
+        <hr class="divider">
+        <table class="station-info">
+          <tr>
+            <td><strong>Station:</strong></td><td>WWV</td>
+          </tr>
+          <tr>
+            <td><strong>Established:</strong></td><td>1919</td>
+          </tr>
+          <tr>
+            <td><strong>Location:</strong></td><td><a href="https://www.google.com/maps/place/NIST+Radio+Station+WWV/@40.6797227,-105.0415411,367m/data=!3m1!1e3!4m7!3m6!1s0x876934b040547107:0x987903210de784fb!8m2!3d40.6796942!4d-105.042429!9m1!1b1">Fort Collins, CO</a></td>
+          </tr>
+          <tr>
+            <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15, 20, 25 MHz</td>
+          </tr>
+          <tr>
+            <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
+          </tr>
+          <tr>
+            <td><strong>Identification:</strong></td><td>0, 30 minutes (<a href="#">play</a>)</td>
+          </tr>
+          <tr>
+            <td><strong>Pulse Frequency:</strong></td><td>1000Hz</td>
+          </tr>
+        </table>
       </div>
       <div id="wwvh-info" style="width: 100%; margin-top:20px;">
-      <hr class="divider">
-      <h2 style="margin-top: 2px">
-        WWVH Data
-      </h2>
-      <table class="station-info" style="width:100%">
-        <tr>
-          <td><strong>Established:</strong></td><td>1948</td>
-        </tr>
-        <tr>
-          <td><strong>Location:</strong></td><td><a href="https://www.google.com/maps/place/NIST+RADIO+STATION:+WWVH/@21.9877093,-159.7630518,329m/data=!3m1!1e3!4m5!3m4!1s0x7c07a955192c7c81:0x99e41658f4e73878!8m2!3d21.9879269!4d-159.7627344">Kekaha, HI</a></td>
-        </tr>
-        <tr>
-          <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15 MHz</td>
-        </tr>
-        <tr>
-          <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
-        </tr>
-        <tr>
-          <td><strong>Identification:</strong></td><td>29, 59 minutes (<a href="#">play</a>)</td>
-        </tr>
-        <tr>
-          <td><strong>Pulse Frequency:</strong></td><td>1200Hz</td>
-        </tr>
-      </table>
-      </div>
-      <hr class="divider">
-      <!--
         <hr class="divider">
-        -->
-
-      <div>
-<h2 id="what-is-this">WWV Simulator</h2>
-<p>This site attempts to simulate the audio portion of stations WWV and WWVH. It should sound much like what you’d hear if you tuned in a shortwave radio to one of these stations. Each station has its own style of tones and voice time announcements. Station identification is every half hour.</p>
-<p>This is only an simulation, using your computer’s time and samples of the audio. It is not a rebroadcast of the real stations.</p>
-<h2 id="what-is-wwv">What is WWV?</h2>
-<p><a href="https://en.wikipedia.org/wiki/WWV_(radio_station)">WWV</a> is a radio station run by the National Institute of Standards and Technology (<a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">NIST</a>) that broadcasts precise time and frequency from Fort Collins, CO. A companion station,WWVH, provides a similar service from Kauai, HI. The time sources are highly accurate atomic clocks. These broadcasts contain an audible portion (which this site emulates), and a <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Digital_time_code">digital time code</a> that can be received by clocks and watches for automatically maintaining precise time.</p>
-<p>WWV has operated continuously since 1919, but its future is in doubt due to <a href="https://www.voanews.com/a/time-may-be-running-out-for-millions-of-clocks/4554376.html">proposed budget cuts</a> which could shutter the stations.</p>
-<h2 id="why-make-this-site">Why make this site?</h2>
-<p>I have fond memories of WWV being one of the first stations I picked up when I got my ham radio license many years ago. It was one of the few that could nearly always be picked up on <em>some</em> frequency, even during poor propagation. When conditions were good, sometimes I could also hear WWVH (Hawaii → Chicago <em>is</em> a bit of haul). Besides just tuning it in, I actually liked having it on while doing my homework! The steady pulses, curious patterns of tones, and old-timey timbre of the occasional voice announcements made for nice background noise.</p>
-<p>WWV has never (to my knowledge) been streamed over the internet. There are many <a href="https://www.youtube.com/results?search_query=wwv">sample recordings</a> available, but nothing that just runs and reflects the current time. Creating a simulated WWV website has been on my “someday” project list for a long time, but the threat of WWV/H being shut down provided serious motivation to make it a reality. Even if NIST does power down the amplifiers, this site can still provide a reasonable representation of what those iconic stations sounded like.</p>
-<h2 id="how-accurate-is-it">How Accurate is It?</h2>
-<p>Time-wise, this site is exactly as (in)accurate as your computer or phone clock currently is. As far as how well it matches the real WWV/H transmissions, my goal has been to mimic the audio portion as closely as reasonably possible. The stations have <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Broadcast_format">distinct patterns</a> of pulses, tones, and voice announcements which have been implemented. The simulation includes all of the elements except for real-time voice announcements, such as space weather reports, and some really esoteric things like special adjustments for leap seconds. If you find an error, let me know!</p>
-<p>Note: if you’re listening with bluetooth headphones, the pulses and clock might be slightly out of sync. Furthermore, if the browser tab isn’t active, timing can become skewed (browser dependent).</p>
-<h2 id="implementation">Implementation</h2>
-<p>The voice announcements were obtained from the telephone time service that NIST provides. This laborious process involved recording and an editing (e.g. removing time pulses) hundreds of calls. Calls were made with Google Hangouts, and all editing was done in Audacity. A <a href="https://github.com/kalafut/wwv/tree/master/wwv_tones">small program</a> was written to generate the tones and pulses according to the NIST specification.</p>
-<p>The application itself is entirely in Javascript. It leans heavily on the excellent <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips.</p>
-<h2 id="todo">Todo</h2>
-<p>I’m happy with the site as is but there are a few areas of improvement:</p>
-<ul>
-<li>Some audio clips could be better. Either the original recording wasn’t very good or the the pulse-removal editing doesn’t sound right. Fortunately, the standard is pretty low since listening to WWV on shortwave was hardly ever CD-quality for most people 🙂.</li>
-<li>I’d like more/better background photos. The one of WWVH in particular is very low resolution but was the only decent one of the antenna field that I found. If you have others, let me know!</li>
-</ul>
-<h2 id="contact">Contact</h2>
-<p>If you have any questions, bug reports or improvements, the <a href="https://github.com/kalafut/wwv">Github project</a> is the best place to reach me.</p>
+        <h2 style="margin-top: 2px">
+          WWVH Data
+        </h2>
+        <table class="station-info" style="width:100%">
+          <tr>
+            <td><strong>Established:</strong></td><td>1948</td>
+          </tr>
+          <tr>
+            <td><strong>Location:</strong></td><td><a href="https://www.google.com/maps/place/NIST+RADIO+STATION:+WWVH/@21.9877093,-159.7630518,329m/data=!3m1!1e3!4m5!3m4!1s0x7c07a955192c7c81:0x99e41658f4e73878!8m2!3d21.9879269!4d-159.7627344">Kekaha, HI</a></td>
+          </tr>
+          <tr>
+            <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15 MHz</td>
+          </tr>
+          <tr>
+            <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
+          </tr>
+          <tr>
+            <td><strong>Identification:</strong></td><td>29, 59 minutes (<a href="#">play</a>)</td>
+          </tr>
+          <tr>
+            <td><strong>Pulse Frequency:</strong></td><td>1200Hz</td>
+          </tr>
+        </table>
       </div>
-
-
-      <div class="message">
-        <div id="loadingBox" class="intro-box hidden">
-          Press Play to start listening to simulated WWV and WWVH audio.
-          <br>
-          <br>
-          <button id="startButton" disabled="disabled">Loading audio...</button>
-        </div>
+      <hr class="divider">
+      <div>
+        <h2 id="what-is-this">WWV Simulator</h2>
+        <p>This site attempts to simulate the audio portion of stations WWV and WWVH. It should sound much like what you’d hear if you tuned in a shortwave radio to one of these stations. Each station has its own style of tones and voice time announcements. Station identification is every half hour.</p>
+        <p>This is only an simulation, using your computer’s time and samples of the audio. It is not a rebroadcast of the real stations.</p>
+        <h2 id="what-is-wwv">What is WWV?</h2>
+        <p><a href="https://en.wikipedia.org/wiki/WWV_(radio_station)">WWV</a> is a radio station run by the National Institute of Standards and Technology (<a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">NIST</a>) that broadcasts precise time and frequency from Fort Collins, CO. A companion station,WWVH, provides a similar service from Kauai, HI. The time sources are highly accurate atomic clocks. These broadcasts contain an audible portion (which this site emulates), and a <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Digital_time_code">digital time code</a> that can be received by clocks and watches for automatically maintaining precise time.</p>
+        <p>WWV has operated continuously since 1919, but its future is in doubt due to <a href="https://www.voanews.com/a/time-may-be-running-out-for-millions-of-clocks/4554376.html">proposed budget cuts</a> which could shutter the stations.</p>
+        <h2 id="why-make-this-site">Why make this site?</h2>
+        <p>I have fond memories of WWV being one of the first stations I picked up when I got my ham radio license many years ago. It was one of the few that could nearly always be picked up on <em>some</em> frequency, even during poor propagation. When conditions were good, sometimes I could also hear WWVH (Hawaii → Chicago <em>is</em> a bit of haul). Besides just tuning it in, I actually liked having it on while doing my homework! The steady pulses, curious patterns of tones, and old-timey timbre of the occasional voice announcements made for nice background noise.</p>
+        <p>WWV has never (to my knowledge) been streamed over the internet. There are many <a href="https://www.youtube.com/results?search_query=wwv">sample recordings</a> available, but nothing that just runs and reflects the current time. Creating a simulated WWV website has been on my “someday” project list for a long time, but the threat of WWV/H being shut down provided serious motivation to make it a reality. Even if NIST does power down the amplifiers, this site can still provide a reasonable representation of what those iconic stations sounded like.</p>
+        <h2 id="how-accurate-is-it">How Accurate is It?</h2>
+        <p>Time-wise, this site is exactly as (in)accurate as your computer or phone clock currently is. As far as how well it matches the real WWV/H transmissions, my goal has been to mimic the audio portion as closely as reasonably possible. The stations have <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Broadcast_format">distinct patterns</a> of pulses, tones, and voice announcements which have been implemented. The simulation includes all of the elements except for real-time voice announcements, such as space weather reports, and some really esoteric things like special adjustments for leap seconds. If you find an error, let me know!</p>
+        <p>Note: if you’re listening with bluetooth headphones, the pulses and clock might be slightly out of sync. Furthermore, if the browser tab isn’t active, timing can become skewed (browser dependent).</p>
+        <h2 id="implementation">Implementation</h2>
+        <p>The voice announcements were obtained from the telephone time service that NIST provides. This laborious process involved recording and an editing (e.g. removing time pulses) hundreds of calls. Calls were made with Google Hangouts, and all editing was done in Audacity. A <a href="https://github.com/kalafut/wwv/tree/master/wwv_tones">small program</a> was written to generate the tones and pulses according to the NIST specification.</p>
+        <p>The application itself is entirely in Javascript. It leans heavily on the excellent <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips.</p>
+        <h2 id="todo">Todo</h2>
+        <p>I’m happy with the site as is but there are a few areas of improvement:</p>
+        <ul>
+          <li>Some audio clips could be better. Either the original recording wasn’t very good or the the pulse-removal editing doesn’t sound right. Fortunately, the standard is pretty low since listening to WWV on shortwave was hardly ever CD-quality for most people 🙂.</li>
+          <li>I’d like more/better background photos. The one of WWVH in particular is very low resolution but was the only decent one of the antenna field that I found. If you have others, let me know!</li>
+        </ul>
+        <h2 id="contact">Contact</h2>
+        <p>If you have any questions, bug reports or improvements, the <a href="https://github.com/kalafut/wwv">Github project</a> is the best place to reach me.</p>
       </div>
     </div>
     <script src="main.js?v=%JS_HASH%"></script>
