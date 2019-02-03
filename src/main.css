@@ -1,6 +1,5 @@
 body {
-	 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-	/* font-family: 'Roboto', sans-serif;*/
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 	background: white;
 	hyphens: auto;
 }
@@ -13,14 +12,6 @@ a {
 	color: #ff0000;
 }
 
-a.about {
-	color: black;
-}
-
-a.about:visited {
-	color: black;
-}
-
 td {
 	vertical-align: top;
 }
@@ -31,6 +22,14 @@ td {
 	min-height: 100vh;
 }
 
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.center {
+	justify-content: center;
+}
 
 .data table {
 	background: #101b27;
@@ -80,12 +79,16 @@ hr.divider {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin-left: 20px;
+	amargin-left: 20px;
 }
 
 .station-option {
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.audio-control {
+	font-size: 20pt;
 }
 
 .mute {
@@ -146,9 +149,7 @@ button {
 	font-size: 54pt;
 	margin: 0px;
 	width: 4em;
-	afont-family: 'Cousine', monospace;
-	font-family: monospace;
-	afont-family: 'Roboto Mono', monospace;
+	font-family: 'Courier', monospace;
 }
 
 @media all and (min-width: 768px) {

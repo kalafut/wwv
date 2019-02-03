@@ -1,22 +1,19 @@
-/* global document, window */
+/* global document */
 import Cookies from 'js-cookie';
 import { runningClock } from './time';
-import { $, getStation } from './util';
+import {
+  $, getStation, hide, show,
+} from './util';
 import { stop, schedule } from './scheduler';
 import { onReady, sounds } from './audio';
 
 let muted = true;
+let showPlayIntro = true;
 
 function setBackground() {
-  const stationClass = (getStation() === 'h') ? 'wwvh' : 'wwv';
-  $('body').className = `background ${stationClass}`;
-  if (getStation() === 'v') {
-    $('wwv-info').classList.remove('none');
-    $('wwvh-info').classList.add('none');
-  } else {
-    $('wwvh-info').classList.remove('none');
-    $('wwv-info').classList.add('none');
-  }
+  const station = getStation();
+  show(station === 'v' ? 'wwv-info' : 'wwvh-info');
+  hide(station === 'v' ? 'wwvh-info' : 'wwv-info');
 }
 
 function setStation() {
@@ -34,25 +31,32 @@ document.querySelectorAll('input[name="station"]').forEach((el) => {
 
 function audioToggle(muteState = null) {
   if (muteState === 'loading') {
-    $('audio').classList.add('none');
-    $('loadingMessage').classList.remove('none');
+    $('statusMessage').innerHTML = 'Loading audio...';
     return;
   }
 
-  $('audio').classList.remove('none');
-  $('loadingMessage').classList.add('none');
+  hide('statusMessage');
 
   if (muteState !== null) {
     muted = muteState;
   } else {
     muted = !muted;
   }
-  const el = $('audio');
-  el.src = muted ? 'images/muted.svg?v=1' : 'images/unmuted.svg?v=1';
 
   if (muted) {
+    show('play');
+    hide('pause');
     stop();
+
+
+    if (showPlayIntro) {
+      show('statusMessage');
+      $('statusMessage').innerHTML = 'Press play to start audio';
+      showPlayIntro = false;
+    }
   } else {
+    show('pause');
+    hide('play');
     schedule();
   }
 }
@@ -92,7 +96,12 @@ function init() {
   });
 }
 
-window.audioToggle = audioToggle;
+$('play').addEventListener('click', () => {
+  audioToggle();
+});
+$('pause').addEventListener('click', () => {
+  audioToggle();
+});
 
 setBackground();
 init();

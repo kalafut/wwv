@@ -13,7 +13,7 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="main.css?v=%CSS_HASH%">
-    <link rel="stylesheet" type="text/css" href="main.css?v=%CSS_HASH%">
+    <link rel="stylesheet" type="text/css" href="css/fontello.css?v=%FONT_HASH%">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Code+Pro|Roboto" rel="stylesheet">
   </head>
   <body id="body">
@@ -32,16 +32,19 @@
               </div>
               <div class="mute">
                 <span id="loadingMessage" class="none">Loading audio...</span>
-                <img id="audio" src="images/muted.svg?v=2" onclick="audioToggle()" height="25px" width="25px"/>
-                
+                <!--
+                <i id="play" class="icon-play audio-control"></i>
+                <i id="pause" class="icon-pause audio-control none"></i>
+                -->
+                <i id="play" class="icon-volume-off audio-control"></i>
+                <i id="pause" class="icon-volume-up audio-control none"></i>
               </div>
-                <div class="none">
-                  <span class="selected">WWV</span>
-                  <span class="">WWVH</span>
-                </div>
             </div>
-            <!--
-            -->
+            <div class="row center">
+              <div id="statusMessage">
+                Press play to start audio
+              </div>
+            </div>
         </div>
       </div>
       <div id="wwv-info">

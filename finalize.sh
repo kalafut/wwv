@@ -5,6 +5,8 @@ cp src/index.html ./dist/
 cp src/main.css ./dist/
 rsync --progress -u ./images/* ./dist/images/
 rsync --progress -u ./clips/* ./dist/clips/
+rsync --progress -u ./css/* ./dist/css/
+rsync --progress -u ./font/* ./dist/font/
 
 pandoc --metadata pagetitle="." --template src/about_template.html src/about.md -o dist/about.html
 
