@@ -4,10 +4,6 @@ body {
 	hyphens: auto;
 }
 
-.about {
-	font-weight: bold;
-}
-
 a {
 	color: #ff0000;
 }
@@ -31,36 +27,25 @@ td {
 	justify-content: center;
 }
 
-.data table {
-	background: #101b27;
-	color: #f3f3f3;
-	border-radius: 5px;
-	padding: 5px;
-}
-
 .clock {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 15px;
 }
 
-.heading {
-	acolor: #ff0000;
-	afont-family: 'Roboto';
-	font-size: 22pt;
-	margin-top: 20px;
-}
-
 hr.divider {
-	width: 70%;
+	width: 100%;
 	border-style: solid;
 	border-color: #dddddd;
 
 	border-width: 1px;
 }
 
-.station-about {
-	display: flex;
+img.gh {
+	width: 30px;
+	display: block;
+	margin: auto;
+	margin-top: 25px;
 }
 
 .station {
@@ -96,24 +81,9 @@ hr.divider {
 	margin-right: 55px;
 }
 
-#audio {
-}
-
-
 #clock_block {
 	border-radius: 5px;
 }
-
-.message {
-	display: flex;
-	justify-content: center;
-}
-
-.filler {
-	display: flex;
-	flex: 1;
-}
-
 
 .hidden {
 	visibility: hidden;
@@ -121,27 +91,6 @@ hr.divider {
 
 .none {
 	display: none;
-}
-
-button {
-	display: block;
-	margin: 0 auto;
-}
-
-.background {
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-
-.intro-box {
-	width: 50%;
-	border-radius: 5px;
-	margin-top: 25px;
-	padding: 15px;
-
-	background: #101b27;
-	color: #f3f3f3;
-	font-size: 16pt;
 }
 
 #clock {
@@ -152,45 +101,13 @@ button {
 	font-family: 'Courier', monospace;
 }
 
+.content {
+  max-width: 760px;
+  margin: auto;
+}
+
 @media all and (min-width: 768px) {
 	#clock {
 		font-size: 70pt;
 	}
-	.intro-box {
-		width: 30%;
-	}
-}
-
-.selected {
-	border: solid;
-	border-width: 1px;
-	border-radius: 2px;
-	border-color: #ff0000;
-	padding: 1px;
-}
-
-.wwv {
-}
-
-.wwvh {
-}
-
-.footer {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 60px;
-}
-
-select {
-	padding: 5px 5px 5px 5px;
-	font-size: 16px;
-	border: 0px;
-	/*
-	width: 250px;
-	height: 34px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	*/
-	background-color: rgba(255,255,255, 0.5) ;
 }
