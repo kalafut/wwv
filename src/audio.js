@@ -40,12 +40,20 @@ const idents = {
   }),
 };
 
+let test;
 export const sounds = {
-  play(clip) {
+  play(clip, onEnd) {
+    let id;
     switch (clip) {
       case 'h_ident':
       case 'v_ident':
-        return idents[clip].play();
+        id = idents[clip].play();
+        if (onEnd) {
+          idents[clip].on('end', onEnd, id);
+        }
+        test = idents[clip];
+        // setTimeout(() => idents.v_ident.stop(), 2000);
+        return id;
       default:
         return container.play(clip);
     }
@@ -62,7 +70,7 @@ export const sounds = {
   seek(clip, amount) {
     idents[clip].seek(amount / 1000);
   },
-  stop() {
+  stop(id) {
     idents.h_ident.stop();
     idents.v_ident.stop();
   },

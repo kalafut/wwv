@@ -17,6 +17,7 @@ function setBackground() {
 
 function setStation() {
   setBackground();
+  identDemoToggle(false); // eslint-disable-line no-use-before-define
   if (!muted) {
     sounds.stop();
     stop();
@@ -46,7 +47,7 @@ function audioToggle(muteState = null) {
     show('play');
     hide('pause');
     stop();
-
+    sounds.stop();
 
     if (showPlayIntro) {
       show('statusMessage');
@@ -54,6 +55,7 @@ function audioToggle(muteState = null) {
       showPlayIntro = false;
     }
   } else {
+    identDemoToggle(false); // eslint-disable-line no-use-before-define
     show('pause');
     hide('play');
     schedule();
@@ -81,6 +83,39 @@ $('play').addEventListener('click', () => {
 $('pause').addEventListener('click', () => {
   audioToggle();
 });
+
+let identDemoPlaying = false;
+function identDemoToggle(play = null) {
+  if (play !== null) {
+    identDemoPlaying = play;
+  } else {
+    identDemoPlaying = !identDemoPlaying;
+  }
+
+  let el;
+  let clip;
+  if (getStation() === 'v') {
+    el = $('play-wwv');
+    clip = 'v_ident';
+  } else {
+    el = $('play-wwvh');
+    clip = 'h_ident';
+  }
+
+  if (identDemoPlaying) {
+    audioToggle(true);
+    sounds.play(clip, () => {
+      el.innerHTML = 'play';
+    });
+    el.innerHTML = 'stop';
+  } else {
+    sounds.stop();
+    el.innerHTML = 'play';
+  }
+}
+
+$('play-wwv').addEventListener('click', () => identDemoToggle());
+$('play-wwvh').addEventListener('click', () => identDemoToggle());
 
 setBackground();
 init();
