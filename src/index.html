@@ -12,17 +12,29 @@
       gtag('config', 'UA-1441459-13');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" type="text/css" href="main.css?v=%CSS_HASH%">
     <link rel="stylesheet" type="text/css" href="css/fontello.css?v=%FONT_HASH%">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Code+Pro|Roboto" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="images/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>WWV Simulator</title>
   </head>
   <body>
-    <div class="content"> 
+    <div class="content">
       <div class="main">
         <div class="clock">
-          <div id="clock_block" class="hidden">
+          <div>
             <span id="clock"></span>
-            <div class="station">
+            <div class="audio-control-group">
               <div class="station-select">
                 <label class="station-option">
                   <input type="radio" name="station" value="v" checked>WWV<br>
@@ -31,14 +43,10 @@
                   <input type="radio" name="station" value="h">WWVH
                 </label>
               </div>
-              <div class="mute">
+              <div class="play-pause">
                 <span id="loadingMessage" class="none">Loading audio...</span>
                 <i id="play" class="icon-play audio-control"></i>
                 <i id="pause" class="icon-pause audio-control none"></i>
-                <!--
-                  <i id="play" class="icon-volume-off audio-control"></i>
-                  <i id="pause" class="icon-volume-up audio-control none"></i>
-                -->
               </div>
             </div>
             <div class="row center">
@@ -48,8 +56,9 @@
             </div>
           </div>
         </div>
+        <hr class="divider">
+        <div class="station-info-container">
         <div id="wwv-info">
-          <hr class="divider">
           <table class="station-info">
             <tr>
               <td><strong>Station:</strong></td><td>WWV</td>
@@ -64,7 +73,7 @@
               <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15, 20, 25 MHz</td>
             </tr>
             <tr>
-              <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
+              <td><strong>Power:</strong></td><td>2.5 - 10 kW</td>
             </tr>
             <tr>
               <td><strong>Identification:</strong></td><td>0, 30 minutes (<a  id="play-wwv" href="#">play</a>)</td>
@@ -72,11 +81,16 @@
             <tr>
               <td><strong>Pulse Frequency:</strong></td><td>1000Hz</td>
             </tr>
+            <tr>
+              <td><strong>Official NIST Site:</strong></td><td><a href="https://www.nist.gov/pml/time-and-frequency-division/radio-stations/wwv">WWV</a></td>
+            </tr>
           </table>
         </div>
-        <div id="wwvh-info" style="width: 100%; margin-top:20px;">
-          <hr class="divider">
-          <table class="station-info" style="width:100%">
+        <div id="wwvh-info" class="none">
+          <table class="station-info">
+            <tr>
+              <td><strong>Station:</strong></td><td>WWVH</td>
+            </tr>
             <tr>
               <td><strong>Established:</strong></td><td>1948</td>
             </tr>
@@ -87,7 +101,7 @@
               <td><strong>Frequencies:</strong></td><td>2.5, 5, 10, 15 MHz</td>
             </tr>
             <tr>
-              <td><strong>Power:</strong></td><td>2.5kW - 10kW</td>
+              <td><strong>Power:</strong></td><td>5 - 10 kW</td>
             </tr>
             <tr>
               <td><strong>Identification:</strong></td><td>29, 59 minutes (<a id="play-wwvh" href="#">play</a>)</td>
@@ -95,29 +109,50 @@
             <tr>
               <td><strong>Pulse Frequency:</strong></td><td>1200Hz</td>
             </tr>
+            <tr>
+              <td><strong>Official NIST Site:</strong></td><td><a href="https://www.nist.gov/pml/time-and-frequency-division/radio-stations/wwvh">WWVH</a></td>
+            </tr>
           </table>
+        </div>
         </div>
         <hr class="divider">
         <div>
           <h2 id="what-is-this">WWV Simulator</h2>
           <p>This site attempts to simulate the audio portion of stations WWV and WWVH. It should sound much like what you’d hear if you tuned in a shortwave radio to one of these stations. Each station has its own style of tones and voice time announcements. Station identification is every half hour.</p>
+
           <p>This is only an simulation, using your computer’s time and samples of the audio. It is not a rebroadcast of the real stations.</p>
+
           <h2 id="what-is-wwv">What is WWV?</h2>
-          <p><a href="https://en.wikipedia.org/wiki/WWV_(radio_station)">WWV</a> is a radio station run by the National Institute of Standards and Technology (<a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">NIST</a>) that broadcasts precise time and frequency from Fort Collins, CO. A companion station,WWVH, provides a similar service from Kauai, HI. The time sources are highly accurate atomic clocks. These broadcasts contain an audible portion (which this site emulates), and a <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Digital_time_code">digital time code</a> that can be received by clocks and watches for automatically maintaining precise time.</p>
+
+          <p><a href="https://en.wikipedia.org/wiki/WWV_(radio_station)">WWV</a> is a radio station run by the National Institute of Standards and Technology (<a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">NIST</a>) that broadcasts precise time and frequency from Fort Collins, CO. A companion station, <a href="https://en.wikipedia.org/wiki/WWVH">WWVH</a>, provides a similar service from Kekaha, HI. The time sources are highly accurate atomic clocks. These broadcasts contain an audible portion (which this site emulates), and a <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Digital_time_code">digital time code</a> that can be received by clocks and watches for automatically maintaining precise time.</p>
+
           <p>WWV has operated continuously since 1919, but its future is in doubt due to <a href="https://www.voanews.com/a/time-may-be-running-out-for-millions-of-clocks/4554376.html">proposed budget cuts</a> which could shutter the stations.</p>
+
           <h2 id="why-make-this-site">Why make this site?</h2>
+
           <p>I have fond memories of WWV being one of the first stations I picked up when I got my ham radio license many years ago. It was one of the few that could nearly always be picked up on <em>some</em> frequency, even during poor propagation. When conditions were good, sometimes I could also hear WWVH (Hawaii → Chicago <em>is</em> a bit of haul). Besides just tuning it in, I actually liked having it on while doing my homework! The steady pulses, curious patterns of tones, and old-timey timbre of the occasional voice announcements made for nice background noise.</p>
+
           <p>WWV has never (to my knowledge) been streamed over the internet. There are many <a href="https://www.youtube.com/results?search_query=wwv">sample recordings</a> available, but nothing that just runs and reflects the current time. Creating a simulated WWV website has been on my “someday” project list for a long time, but the threat of WWV/H being shut down provided serious motivation to make it a reality. Even if NIST does power down the amplifiers, this site can still provide a reasonable representation of what those iconic stations sounded like.</p>
+
           <h2 id="how-accurate-is-it">How Accurate is It?</h2>
+
           <p>Time-wise, this site is exactly as (in)accurate as your computer or phone clock currently is. As far as how well it matches the real WWV/H transmissions, my goal has been to mimic the audio portion as closely as reasonably possible. The stations have <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Broadcast_format">distinct patterns</a> of pulses, tones, and voice announcements which have been implemented. The simulation includes all of the elements except for real-time voice announcements, such as space weather reports, and some really esoteric things like special adjustments for leap seconds. If you find an error, let me know!</p>
+
           <p>Note: if you’re listening with bluetooth headphones, the pulses and clock might be slightly out of sync. Furthermore, if the browser tab isn’t active, timing can become skewed (browser dependent).</p>
+
           <h2 id="implementation">Implementation</h2>
+
           <p>The voice announcements were obtained from the telephone time service that NIST provides. This laborious process involved recording and an editing (e.g. removing time pulses) hundreds of calls. Calls were made with Google Hangouts, and all editing was done in Audacity. A small program was written to generate the tones and pulses according to the NIST specification.</p>
-          <p>The application itself is entirely in Javascript. It leans heavily on the excellent <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips.</p>
+
+          <p>The application itself is entirely in Javascript. It leans heavily on the <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips. Because the timers are at the mercy of the browser, running the application in a background tab or unfocused browser may introduce some slew.</p>
+
           <h2 id="contact">Contact</h2>
+
           <p>If you have any questions, bug reports or improvements, the <a href="https://github.com/kalafut/wwv">Github project</a> is the best place to reach me.</p>
+
           <p>
-          <a href="https://github.com/kalafut/wwv"><img class="gh" src="images/GitHub-Mark-120px-plus.png"/></a>
+
+          <a href="https://github.com/kalafut/wwv"><img class="gh" src="images/GitHub-Mark-120px-plus.png" alt="GitHub project"/></a>
           </p>
         </div>
       </div>

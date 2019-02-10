@@ -121,38 +121,6 @@ func main() {
 	g.tone(hour_pulse_freq, 800*time.Millisecond)
 	g.close()
 
-	//	for _, f := range []int{0, 440, 500, 600} {
-	//		g := newGenerator(fmt.Sprintf("v_main_%d.wav", f))
-	//		g.tone_seq(v_pulse_freq, float64(f))
-	//		g.close()
-	//	}
-	//
-	//	for _, f := range []int{0, 440, 500, 600} {
-	//		g := newGenerator(fmt.Sprintf("h_main_%d.wav", f))
-	//		g.tone_seq(h_pulse_freq, float64(f))
-	//		g.close()
-	//	}
-	//
-	//g = newGenerator("v_pulse_gap.wav")
-	//for i := 0; i < 50; i++ {
-	//	g.pulse_tone(v_pulse_freq, 0, false)
-	//}
-	//g.close()
-
-	//g = newGenerator("h_pulse_gap.wav")
-	//for i := 0; i < 50; i++ {
-	//	g.pulse_tone(h_pulse_freq, 0, false)
-	//}
-	//g.close()
-
-	//g = newGenerator("v_pulse.wav")
-	//g.pulse(v_pulse_freq)
-	//g.close()
-
-	//g = newGenerator("h_pulse.wav")
-	//g.pulse(h_pulse_freq)
-	//g.close()
-
 	for _, f := range []int{0, 440, 500, 600} {
 		g := newGenerator(fmt.Sprintf("v_pulse_tone_%d.wav", f))
 		g.pulse_tone(v_pulse_freq, float64(f), false)

@@ -1,5 +1,6 @@
 /* global document */
-import { runningClock } from './time';
+import { setDriftlessTimeout } from 'driftless';
+import { getTime, runningClock } from './time';
 import {
   $, getStation, hide, shouldShowPlayMsg, show,
 } from './util';
@@ -9,14 +10,11 @@ import { onReady, sounds } from './audio';
 let muted = true;
 let showPlayIntro = true;
 
-function setBackground() {
+function setStation() {
   const station = getStation();
   show(station === 'v' ? 'wwv-info' : 'wwvh-info');
   hide(station === 'v' ? 'wwvh-info' : 'wwv-info');
-}
 
-function setStation() {
-  setBackground();
   identDemoToggle(false); // eslint-disable-line no-use-before-define
   if (!muted) {
     sounds.stop();
@@ -62,15 +60,10 @@ function audioToggle(muteState = null) {
   }
 }
 
-function startClock() {
-  $('clock_block').classList.remove('hidden');
-  runningClock();
-}
-
 function init() {
   audioToggle('loading');
   showPlayIntro = shouldShowPlayMsg();
-  startClock();
+  runningClock();
 
   onReady(() => {
     audioToggle(true);
@@ -104,9 +97,12 @@ function identDemoToggle(play = null) {
 
   if (identDemoPlaying) {
     audioToggle(true);
-    sounds.play(clip, () => {
-      el.innerHTML = 'play';
-    });
+    const slew = 1000 - getTime().getUTCMilliseconds();
+    setDriftlessTimeout(() => {
+      sounds.play(clip, () => {
+        el.innerHTML = 'play';
+      });
+    }, slew);
     el.innerHTML = 'stop';
   } else {
     sounds.stop();
@@ -117,5 +113,4 @@ function identDemoToggle(play = null) {
 $('play-wwv').addEventListener('click', () => identDemoToggle());
 $('play-wwvh').addEventListener('click', () => identDemoToggle());
 
-setBackground();
 init();

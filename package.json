@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/kalafut/wwv.git"
+    "url": "git+ssh://git@github.com/kalafut/wwv.git"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/kalafut/wwv#readme",
+  "homepage": "https://github.com/kalafut/wwv",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
@@ -20,13 +20,10 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
-    "copy-webpack-plugin": "^4.6.0",
     "eslint": "^5.11.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "markdown-html-webpack-plugin": "^1.0.1",
-    "markdown-loader": "^4.0.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
     "webpack-shell-plugin": "^0.5.0"
@@ -34,7 +31,6 @@
   "dependencies": {
     "driftless": "^2.0.3",
     "howler": "^2.1.1",
-    "js-cookie": "^2.2.0",
-    "present": "^1.0.0"
+    "js-cookie": "^2.2.0"
   }
 }
