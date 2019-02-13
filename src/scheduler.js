@@ -43,10 +43,16 @@ export function schedule() {
   const ms = 1000 * now.getUTCSeconds() + now.getUTCMilliseconds();
   const slew = 1000 - now.getUTCMilliseconds();
   const minute = now.getUTCMinutes();
-
+  const hour = now.getUTCHours();
   const station = getStation();
 
-  const base = toneSchedule[minute][station === 'v' ? 0 : 1];
+  let base = toneSchedule[minute][station === 'v' ? 0 : 1];
+
+  // Don't switch to the hourly 440 tone on the first UTC hour.
+  if (hour === 0 && base === '440') {
+    base = toneSchedule[minute + 2][station === 'v' ? 0 : 1];
+  }
+
 
   const d = clip => sounds.duration(`${station}_${clip}`);
 
@@ -107,7 +113,7 @@ export function schedule() {
 
   // Voice announcement for next minute
   let minutes = now.getUTCMinutes() + 1;
-  let hours = now.getUTCHours();
+  let hours = hour;
   if (minutes > 59) {
     minutes = 0;
     hours += 1;
