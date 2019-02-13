@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # copy files
-cp src/index.html ./dist/
+cp src/*.html ./dist/
 cp src/*.css ./dist/
 rsync --progress -u ./images/* ./dist/images/
 rsync --progress -u ./clips/* ./dist/clips/
