@@ -1,0 +1,113 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.4;
+}
+
+.content {
+  max-width: 40em;
+  margin: auto;
+}
+
+a {
+  color: #ff0000;
+}
+
+td {
+  vertical-align: top;
+}
+
+input[type="radio"] {
+  margin-top: -1px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.center {
+  justify-content: center;
+}
+
+.clock {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+hr.divider {
+  width: 100%;
+  border-style: solid;
+  border-color: #dddddd;
+
+  border-width: 1px;
+}
+
+img.gh {
+  width: 30px;
+  display: block;
+  margin: auto;
+  margin-top: 25px;
+}
+
+.audio-control-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.station-info {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.station-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.station-option {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 130%;
+}
+
+.audio-control {
+  font-size: 22pt;
+}
+
+.play-pause {
+  display: flex;
+  margin-right: 55px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.none {
+  display: none;
+}
+
+#clock {
+  font-size: 54pt;
+  margin: 0px;
+  width: 4em;
+  font-family: 'Courier', monospace;
+}
+
+@media all and (min-width: 768px) {
+  #clock {
+    font-size: 70pt;
+  }
+}
