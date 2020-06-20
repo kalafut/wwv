@@ -6,11 +6,11 @@ Source for https://wwv.mcodes.org
 
 ## Functionality
 
-Simulation the audio portion of WWV. For more information, visit the site.
+Simulates the audio portion of WWV. For more information, [visit the site](https://wwv.mcodes.org).
 
 ## Running locally
 
-The compiled site is in the `dist` folder. You need to serve it from something
+The compiled site is in the `dist` folder. You'll need to serve it from something
 and cannot just open `index.html` from the file system. One easy method is to
 use Python to serve the directory. Just `cd` into it and run: `python -m SimpleHTTPServer`
 
