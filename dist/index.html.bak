@@ -13,7 +13,7 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="main.css?v=110d22cdc2">
+    <link rel="stylesheet" type="text/css" href="main.css?v=ec1603964e">
     <link rel="stylesheet" type="text/css" href="fontello.css?v=%FONT_HASH%">
 
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -35,6 +35,16 @@
           <div>
             <span id="clock"></span>
             <div class="audio-control-group">
+              <div class="volume-control">
+                <i class="icon-volume-up"></i>
+                <input id="volume" type="range" min="0" max="100" value="50">
+                <output id="volume-level" for="volume" aria-role="status">50%</output>
+              </div>
+              <div class="play-pause">
+                <span id="loadingMessage" class="none">Loading audio...</span>
+                <i id="play" class="icon-play audio-control"></i>
+                <i id="pause" class="icon-pause audio-control none"></i>
+              </div>
               <div class="station-select">
                 <label class="station-option">
                   <input type="radio" name="station" value="v" checked>WWV<br>
@@ -42,11 +52,6 @@
                 <label class="station-option">
                   <input type="radio" name="station" value="h">WWVH
                 </label>
-              </div>
-              <div class="play-pause">
-                <span id="loadingMessage" class="none">Loading audio...</span>
-                <i id="play" class="icon-play audio-control"></i>
-                <i id="pause" class="icon-pause audio-control none"></i>
               </div>
             </div>
             <div class="row center">
@@ -158,6 +163,8 @@
         </div>
       </div>
     </div>
-    <script src="main.js?v=5df4b72705"></script>
+    <script src="main.js?v=cd9b420c19"></script>
+    <script data-goatcounter="https://mcodes-wwv.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
   </body>
 </html>

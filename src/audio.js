@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import spriteLayout from './sprite_layout';
 
 let clipsLoaded = 0;
@@ -70,5 +70,8 @@ export const sounds = {
   stop() {
     idents.h_ident.stop();
     idents.v_ident.stop();
+  },
+  volume(value) {
+    Howler.volume(value);
   },
 };

@@ -35,6 +35,16 @@
           <div>
             <span id="clock"></span>
             <div class="audio-control-group">
+              <div class="volume-control">
+                <i class="icon-volume-up"></i>
+                <input id="volume" type="range" min="0" max="100" value="50">
+                <output id="volume-level" for="volume" aria-role="status">50%</output>
+              </div>
+              <div class="play-pause">
+                <span id="loadingMessage" class="none">Loading audio...</span>
+                <i id="play" class="icon-play audio-control"></i>
+                <i id="pause" class="icon-pause audio-control none"></i>
+              </div>
               <div class="station-select">
                 <label class="station-option">
                   <input type="radio" name="station" value="v" checked>WWV<br>
@@ -42,11 +52,6 @@
                 <label class="station-option">
                   <input type="radio" name="station" value="h">WWVH
                 </label>
-              </div>
-              <div class="play-pause">
-                <span id="loadingMessage" class="none">Loading audio...</span>
-                <i id="play" class="icon-play audio-control"></i>
-                <i id="pause" class="icon-pause audio-control none"></i>
               </div>
             </div>
             <div class="row center">
