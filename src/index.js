@@ -62,6 +62,7 @@ function audioToggle(muteState = null) {
 
 function init() {
   audioToggle('loading');
+  sounds.volume(0.5);
   showPlayIntro = shouldShowPlayMsg();
   runningClock();
 
@@ -75,6 +76,11 @@ $('play').addEventListener('click', () => {
 });
 $('pause').addEventListener('click', () => {
   audioToggle();
+});
+$('volume').addEventListener('input', () => {
+  const { value } = $('volume');
+  sounds.volume(value / 100);
+  $('volume-level').innerHTML = `${value}%`;
 });
 
 let identDemoPlaying = false;
