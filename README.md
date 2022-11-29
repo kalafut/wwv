@@ -12,11 +12,11 @@ Simulates the audio portion of WWV. For more information, [visit the site](https
 
 The compiled site is in the `dist` folder. You'll need to serve it from something
 and cannot just open `index.html` from the file system. One easy method is to
-use Python to serve the directory. Just `cd` into it and run: `python -m SimpleHTTPServer`
+use Python to serve the directory. Just `cd` into it and run: `python3 -m http.server`
 
 ## Building
 
-If you want to build the site,  here are the basic steps:
+If you want to build the site, here are the basic steps:
 
 1. Install [NodeJS](https://nodejs.org)
 1. Clone or download this repo and navigate to it.

@@ -17,6 +17,8 @@ cp ../voice_clips/* .
 
 rm h_ident.mp3
 rm v_ident.mp3
+rm h_ident_better.mp3
+rm v_ident_better.mp3
 
 echo "Building sprite"
 audiosprite -f howler2 -e mp3 -b 64 -s 5.02 -u clips *.wav *.mp3

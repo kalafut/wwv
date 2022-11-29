@@ -20,7 +20,6 @@ export function onReady(fn) {
   }
 }
 
-
 spriteLayout.onload = () => {
   // 'silence' is a looping sprite that will run continuously to keep
   // other audio actions responsive.
@@ -31,11 +30,11 @@ container = new Howl(spriteLayout);
 
 const idents = {
   h_ident: new Howl({
-    src: 'clips/h_ident.mp3',
+    src: 'clips/h_ident_better.mp3',
     onload: load,
   }),
   v_ident: new Howl({
-    src: 'clips/v_ident.mp3',
+    src: 'clips/v_ident_better.mp3',
     onload: load,
   }),
 };

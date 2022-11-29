@@ -131,7 +131,7 @@
 
           <p><a href="https://en.wikipedia.org/wiki/WWV_(radio_station)">WWV</a> is a radio station run by the National Institute of Standards and Technology (<a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">NIST</a>) that broadcasts precise time and frequency from Fort Collins, CO. A companion station, <a href="https://en.wikipedia.org/wiki/WWVH">WWVH</a>, provides a similar service from Kekaha, HI. The time sources are highly accurate atomic clocks. These broadcasts contain an audible portion (which this site emulates), and a <a href="https://en.wikipedia.org/wiki/WWV_(radio_station)#Digital_time_code">digital time code</a> that can be received by clocks and watches for automatically maintaining precise time.</p>
 
-          <p>WWV has operated continuously since 1919, but its future is in doubt due to <a href="https://www.voanews.com/a/time-may-be-running-out-for-millions-of-clocks/4554376.html">proposed budget cuts</a> which could shutter the stations.</p>
+          <p>WWV has operated continuously since 1919, but in 2019 its future was in doubt due to <a href="https://www.voanews.com/a/time-may-be-running-out-for-millions-of-clocks/4554376.html">proposed budget cuts</a> that could have shuttered the stations. Fortunately the final NIST budget preserved the funding.</p>
 
           <h2 id="why-make-this-site">Why make this site?</h2>
 
@@ -148,7 +148,7 @@
           <h2 id="implementation">Implementation</h2>
 
           <p>The voice announcements were obtained from the telephone time service that NIST provides. This laborious process involved recording and editing hundreds of calls. Calls were made with Google Hangouts, and all editing was done in <a href="https://www.audacityteam.org/">Audacity</a>. A small program was written to generate the tones and pulses according to the NIST specification. The voice samples and generated tones are then interleaved according
-          to the current time and broadcast schedule of the selected station.</p>
+          to the current time and broadcast schedule of the selected station. In November 2022, the identification samples were updated with higher quality radio recordings.</p>
 
           <p>The application itself is entirely in Javascript. It leans heavily on the <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips.</p>
 
@@ -163,7 +163,7 @@
         </div>
       </div>
     </div>
-    <script src="main.js?v=cd9b420c19"></script>
+    <script src="main.js?v=122d3159e1"></script>
     <script data-goatcounter="https://mcodes-wwv.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
   </body>
