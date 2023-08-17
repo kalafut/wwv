@@ -28,6 +28,28 @@ input[type="radio"] {
   min-height: 100vh;
 }
 
+.banner {
+  display: none;
+  background-color: #bef3f1;
+  padding: 0.75em;
+  border: 1px solid #000;
+  border-radius: 6px;
+
+  justify-content: space-between; /* Distribute items at the ends */
+  margin-bottom: 2em;
+}
+
+.left-div {
+  text-align: left;
+}
+
+.right-div {
+  text-align: right;
+  margin-right: 1em;
+  font-size: larger;
+  color: rgb(58, 58, 58);
+}
+
 .row {
   display: flex;
   flex-direction: row;

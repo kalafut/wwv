@@ -30,6 +30,14 @@
   </head>
   <body>
     <div class="content">
+      <div id="donations" class="banner">
+        <div class="left-div">
+        Donations are now accepted. See <a href="#donations-main">details</a> below.
+        </div>
+        <div class="right-div">
+          <span onclick="document.getElementById('donations').style.display='none'">X</span>
+        </div>
+      </div>
       <div class="main">
         <div class="clock">
           <div>
@@ -152,10 +160,28 @@
 
           <p>The application itself is entirely in Javascript. It leans heavily on the <a href="https://howlerjs.com/">Howler</a> and <a href="https://github.com/dbkaplun/driftless">Driftless</a> libraries to accurately sequence the audio clips.</p>
 
-          <h2 id="contact">Donations</h2>
+          <section id="donations-main">
+
+          <h2>Donations</h2>
           <p>
-            Some fans of this site have asked about how they can show their support, buy me a coffee, etc. I finally got a donation link set up: <a href="https://donate.stripe.com/7sI6p24tu8zxfKw7ss">WWW Simulator tip jar</a>
+            Some fans of this site have asked about how they can show their support, buy me a coffee, etc. I finally got around
+            to setting up a donation link, and any contributions are appreciated. Thank you!
+
+            <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<div class="center" style="text-align: center;">
+<stripe-buy-button
+  buy-button-id="buy_btn_0NfzcZ4QA6hMDFSGp908FT3R"
+  publishable-key="pk_live_14QA6hMDFSGEq4ITm7DV7tm1nJ5l1BZTThhNWBpfIMuItw3FjQVspEPe631KSzBeDw9r6OB4Zp1x4R5NFkx0ZDXaH00muM2ykH5"
+  class="center"
+>
+</stripe-buy-button>
+
+</div>
           </p>
+          </section>
 
           <h2 id="contact">Contact</h2>
 
@@ -171,5 +197,30 @@
     <script src="main.js?v=%JS_HASH%"></script>
     <script data-goatcounter="https://mcodes-wwv.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
+
+      <script>
+        // 1. Try to read a cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // 2. Set the "banner" HTML element to "display: flex" if the cookie is not set
+        const bannerElement = document.getElementById('donations');
+        const cookieName = 'banner-shown';
+        const cookieValue = getCookie(cookieName);
+
+        if (!cookieValue) {
+            bannerElement.style.display = 'flex';
+        }
+
+        // 3. Set the cookie with no expiration
+        function setCookie(name, value) {
+            document.cookie = `${name}=${value}; path=/`;
+        }
+
+        setCookie(cookieName, 'true');
+    </script>
   </body>
 </html>
