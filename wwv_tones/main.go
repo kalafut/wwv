@@ -16,6 +16,7 @@ const (
 	v_pulse_freq    = 1000
 	h_pulse_freq    = 1200
 	hour_pulse_freq = 1500
+	digital_freq    = 100
 
 	amplitude = 0.6
 )
@@ -52,7 +53,11 @@ func (g *generator) close() {
 	g.w.Close()
 }
 
-func (g *generator) tone(freq float64, duration time.Duration) {
+func (g *generator) tone(freq float64, duration time.Duration, amplitudeOverride ...float64) {
+	amplitude := amplitude
+	if len(amplitudeOverride) > 0 {
+		amplitude = amplitudeOverride[0]
+	}
 	samples := int(float64(g.rate) * duration.Seconds())
 	for n := 0; n < samples; n += 1 {
 		var y int32
@@ -106,6 +111,13 @@ func (g *generator) tone_seq(pfreq, tfreq float64) {
 	}
 }
 
+func (g *generator) digital_seq(duration time.Duration) {
+	reserved_duration := 30 * time.Millisecond
+	g.silence(reserved_duration)
+	g.tone(digital_freq, duration, 0.20)
+	g.tone(digital_freq, 1000*time.Millisecond-reserved_duration-duration, 0.01)
+}
+
 func main() {
 	var g *generator
 
@@ -140,4 +152,17 @@ func main() {
 		g.pulse_long_tone(h_pulse_freq, float64(f))
 		g.close()
 	}
+
+	// digital tones
+	g = newGenerator("digital_marker.wav")
+	g.digital_seq(800 * time.Millisecond)
+	g.close()
+
+	g = newGenerator("digital_one.wav")
+	g.digital_seq(500 * time.Millisecond)
+	g.close()
+
+	g = newGenerator("digital_zero.wav")
+	g.digital_seq(200 * time.Millisecond)
+	g.close()
 }

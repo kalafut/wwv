@@ -1,8 +1,9 @@
 /* eslint prefer-destructuring: ["error", {AssignmentExpression: {array: false}}] */
 import { clearDriftless, setDriftlessTimeout } from 'driftless';
+import { sounds } from './audio';
+import getDigitalCode from './get_digital_code';
 import { getTime } from './time';
 import toneSchedule from './tone_schedule';
-import { sounds } from './audio';
 import { getStation, pluralize } from './util';
 
 const timerHandles = new Set();
@@ -53,7 +54,6 @@ export function schedule() {
     base = toneSchedule[minute + 2][station === 'v' ? 0 : 1];
   }
 
-
   const d = clip => sounds.duration(`${station}_${clip}`);
 
   // ident message
@@ -89,7 +89,7 @@ export function schedule() {
       if (i !== 28 && i !== 58) {
         setTimeout(() => {
           sounds.play(clip);
-        }, ((i - secs) * 1000) + slew);
+        }, (i - secs) * 1000 + slew);
       }
     }
   }
@@ -97,7 +97,6 @@ export function schedule() {
   const p = (...args) => {
     play(station, ...args);
   };
-
 
   // minute or hour pulse
   if (ms < 59000) {
@@ -122,7 +121,7 @@ export function schedule() {
     hours = 0;
   }
 
-  let vtStart = (station === 'h') ? 46500 : 53500;
+  let vtStart = station === 'h' ? 46500 : 53500;
 
   let clip = `${hours}`;
   p(clip, { b: vtStart }, ms);
@@ -141,6 +140,15 @@ export function schedule() {
 
   vtStart += d(clip) + 400;
   p('utc', { b: vtStart }, ms);
+
+  // Digital code
+  const digitalSeq = getDigitalCode(now);
+  for (let i = 0; i < digitalSeq.length; i += 1) {
+    const m = i + 1;
+    const b = m * 1000;
+
+    play('', `digital_${digitalSeq[i]}`, { b }, ms);
+  }
 
   setTimeout(schedule, 60000 - ms);
 }
