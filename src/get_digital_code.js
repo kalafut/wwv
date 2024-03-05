@@ -52,6 +52,8 @@ function findDate(year, month, dayOfWeek, weekOfMonth) {
   return new Date(Date.UTC(year, month, start));
 }
 
+// Current US DST rules are hardcoded here, as they are not expected to change often.
+
 function getDstStartUtc(year) {
   const MONTH = 2;
   const DAY_OF_WEEK = 0; // Sunday
