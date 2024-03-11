@@ -11,7 +11,6 @@ if (override) {
   startTime = '1995-12-17T07:59:55Z';
 }
 
-
 export function getTime() {
   if (startTime != null) {
     const now = new Date();

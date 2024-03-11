@@ -53,8 +53,7 @@ export function schedule() {
     base = toneSchedule[minute + 2][station === 'v' ? 0 : 1];
   }
 
-
-  const d = clip => sounds.duration(`${station}_${clip}`);
+  const d = (clip) => sounds.duration(`${station}_${clip}`);
 
   // ident message
   let identDuration = 0;
@@ -97,7 +96,6 @@ export function schedule() {
   const p = (...args) => {
     play(station, ...args);
   };
-
 
   // minute or hour pulse
   if (ms < 59000) {
