@@ -1,38 +1,33 @@
-const path = require('path');
-const WebpackShellPlugin = require('webpack-shell-plugin');
+const path = require("path");
+const WebpackShellPluginNext = require("webpack-shell-plugin-next");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
   plugins: [
-    new WebpackShellPlugin({
-      onBuildEnd: ['./finalize.sh'],
+    new WebpackShellPluginNext({
+      onBuildEnd: ["./finalize.sh"],
+    }),
+    new ESLintPlugin({
+      fix: true, // Automatically fix linting errors if possible
+      extensions: ["js", "mjs"], // Specify file extensions
+      exclude: ["node_modules", "bower_components"], // Exclude directories
     }),
   ],
 
   module: {
     rules: [
       {
-        enforce: 'pre',
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'eslint-loader',
+          loader: "babel-loader",
           options: {
-            fix: true,
-          },
-        },
-      },
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
+            presets: ["@babel/preset-env"],
           },
         },
       },

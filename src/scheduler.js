@@ -54,7 +54,7 @@ export function schedule() {
     base = toneSchedule[minute + 2][station === 'v' ? 0 : 1];
   }
 
-  const d = clip => sounds.duration(`${station}_${clip}`);
+  const d = (clip) => sounds.duration(`${station}_${clip}`);
 
   // ident message
   let identDuration = 0;
