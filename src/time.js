@@ -11,6 +11,13 @@ if (override) {
   startTime = '1995-12-17T07:59:55Z';
 }
 
+/* eslint-disable no-undef */
+function getOffsetFromCurrentUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const offset = urlParams.get('offset');
+  return offset !== null ? parseInt(offset, 10) : 0;
+}
+
 export function getTime() {
   if (startTime != null) {
     const now = new Date();
@@ -22,7 +29,12 @@ export function getTime() {
     const elapsed = now.getTime() - startMs;
     return new Date(fakeStart.getTime() + elapsed);
   }
-  return new Date();
+
+  const offset = getOffsetFromCurrentUrl();
+  const date = new Date();
+  date.setUTCMinutes(date.getUTCMinutes() + offset);
+
+  return date;
 }
 
 let nextText = '';
